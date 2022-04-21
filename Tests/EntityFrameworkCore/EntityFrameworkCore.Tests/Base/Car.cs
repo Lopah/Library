@@ -10,8 +10,8 @@ public class Car
 {
     public int Id { get; set; }
     public string Name { get; set; } = null!;
-    
+
     public Color Color { get; set; }
-    
+
     public bool Bought { get; set; }
 }

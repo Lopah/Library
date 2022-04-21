@@ -7,10 +7,7 @@ public static class MvcExtensions
 {
     public static void AddApiFilters(this MvcOptions options)
     {
-        if (options is null)
-        {
-            throw new ArgumentNullException(nameof(options));
-        }
+        if (options is null) throw new ArgumentNullException(nameof(options));
 
         options.ReturnHttpNotAcceptable = true;
         options.Filters.Add(new ProducesAttribute(MediaTypeNames.Application.Json));
