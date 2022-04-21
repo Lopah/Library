@@ -4,6 +4,12 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Title>Lopah Library OpenApi</Title>
+        <Authors>Lopah (Daniel Jašek)</Authors>
+        <RepositoryType>private</RepositoryType>
+        <PackageTags>Lopah, Library, OpenAPI</PackageTags>
+        <PackageReleaseNotes>Created OpenAPI common types for easier work</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
