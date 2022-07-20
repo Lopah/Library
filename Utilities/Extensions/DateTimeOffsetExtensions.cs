@@ -28,7 +28,10 @@ public static class DateTimeOffsetExtensions
     {
         var ticks = date.Ticks % TimeSpan.TicksPerMillisecond;
 
-        if (ticks >= 5_000) return date.AddTicks(10_000 - ticks);
+        if (ticks >= 5_000)
+        {
+            return date.AddTicks(10_000 - ticks);
+        }
 
         return date.AddTicks(-ticks);
     }
@@ -49,7 +52,10 @@ public static class DateTimeOffsetExtensions
 
     public static DateTimeOffset AddWithRespectingDaylightSavings(this DateTimeOffset dateTime, TimeSpan span)
     {
-        if (dateTime.Offset == TimeSpan.Zero) return dateTime + span;
+        if (dateTime.Offset == TimeSpan.Zero)
+        {
+            return dateTime + span;
+        }
 
         var shiftedUtcDateTime = dateTime.UtcDateTime + span;
 

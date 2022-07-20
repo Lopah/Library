@@ -34,7 +34,10 @@ public class DateConverter : JsonConverter<DateTimeOffset?>
     /// <param name="options">An object that specifies serialization options to use.</param>
     public override void Write(Utf8JsonWriter writer, DateTimeOffset? value, JsonSerializerOptions options)
     {
-        if (writer is null) throw new ArgumentNullException(nameof(writer));
+        if (writer is null)
+        {
+            throw new ArgumentNullException(nameof(writer));
+        }
 
         if (value.HasValue)
         {

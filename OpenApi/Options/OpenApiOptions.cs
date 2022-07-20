@@ -9,13 +9,16 @@ public class OpenApiOptions
 
     public bool DisableSwagger { get; init; }
 
-    [Required] public OpenApiInfoOptions OpenApiInfo { get; init; }
+    [Required]
+    public OpenApiInfoOptions OpenApiInfo { get; init; }
 
-    [Required] public SecurityOptions Security { get; init; }
+    [Required]
+    public SecurityOptions Security { get; init; }
 
-    public IEnumerable<OpenApiServer> Servers { get; init; }
+    public IEnumerable<OpenApiServer>? Servers { get; init; }
 
-    [Required] public string RoutePrefix { get; init; }
+    [Required]
+    public string RoutePrefix { get; init; }
 
     public string RouteTemplate { get; init; } = DefaultRouteTemplate;
 

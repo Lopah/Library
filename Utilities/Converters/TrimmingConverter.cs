@@ -21,7 +21,10 @@ public class TrimmingConverter : JsonConverter<string>
     /// <param name="options">An object that specifies serialization options to use.</param>
     public override void Write(Utf8JsonWriter writer, string value, JsonSerializerOptions options)
     {
-        if (writer is null) throw new ArgumentNullException(nameof(writer));
+        if (writer is null)
+        {
+            throw new ArgumentNullException(nameof(writer));
+        }
 
         writer.WriteStringValue(value?.Trim());
     }

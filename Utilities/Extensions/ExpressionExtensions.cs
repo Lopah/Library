@@ -7,10 +7,16 @@ public static class ExpressionExtensions
 {
     public static Expression<Func<T, bool>> JoinWithOr<T>(this IReadOnlyList<Expression<Func<T, bool>>> expressions)
     {
-        if (expressions is null) throw new ArgumentNullException(nameof(expressions));
+        if (expressions is null)
+        {
+            throw new ArgumentNullException(nameof(expressions));
+        }
 
         var leftExpression = expressions[0];
-        foreach (var rightExpression in expressions.Skip(1)) leftExpression = leftExpression.OrElse(rightExpression);
+        foreach (var rightExpression in expressions.Skip(1))
+        {
+            leftExpression = leftExpression.OrElse(rightExpression);
+        }
 
         return leftExpression;
     }
@@ -28,7 +34,10 @@ public static class ExpressionExtensions
     internal static Expression<Func<T, bool>> OrElse<T>(this Expression<Func<T, bool>> left,
         Expression<Func<T, bool>> right)
     {
-        if (Equals(left, right)) return left;
+        if (Equals(left, right))
+        {
+            return left;
+        }
 
         var body = Expression.OrElse(left.Body, right.Body.Replace(right.Parameters[0], left.Parameters[0]));
         return Expression.Lambda<Func<T, bool>>(body, left.Parameters);
@@ -54,7 +63,10 @@ public static class ExpressionExtensions
         [return: NotNullIfNotNull("node")]
         public override Expression? Visit(Expression? node)
         {
-            if (node is null) return null;
+            if (node is null)
+            {
+                return null;
+            }
 
             return node == Source ? Target : base.Visit(node);
         }

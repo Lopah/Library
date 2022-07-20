@@ -18,7 +18,10 @@ public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
 
     public ConfigureSwaggerOptions(IApiVersionDescriptionProvider provider, IOptions<OpenApiOptions> options)
     {
-        if (options is null) throw new ArgumentNullException(nameof(options));
+        if (options is null)
+        {
+            throw new ArgumentNullException(nameof(options));
+        }
 
         _provider = provider ?? throw new ArgumentNullException(nameof(provider));
         _openApiOptions = options.Value;
@@ -31,9 +34,13 @@ public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
     public void Configure(SwaggerGenOptions options)
     {
         if (_openApiOptions.Security.ApiKey is null)
+        {
             options.AddOAuthSecurityDefinition(_openApiOptions.Security);
+        }
         else
+        {
             options.AddApiKeySecurityDefinition(_openApiOptions.Security.ApiKey);
+        }
 
         AddXmlDocs(options);
         AddServers(options);
@@ -47,18 +54,30 @@ public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
 
     private void AddServers(SwaggerGenOptions options)
     {
-        if (_openApiOptions.Servers != null)
-            foreach (var server in _openApiOptions.Servers)
-                options.AddServer(server);
+        if (_openApiOptions.Servers == null && _openApiOptions.Servers?.Any() != true)
+        {
+            return;
+        }
+
+        foreach (var server in _openApiOptions.Servers)
+        {
+            options.AddServer(server);
+        }
     }
 
     private void AddXmlDocs(SwaggerGenOptions options)
     {
         var xmlPath = Assembly.GetEntryAssembly()?.XmlCommentsFilePath();
 
-        if (xmlPath != null && Directory.Exists(xmlPath))
-            foreach (var fileInfo in new DirectoryInfo(xmlPath).EnumerateFiles("*.xml"))
-                options.IncludeXmlComments(fileInfo.FullName, true);
+        if (xmlPath == null || !Directory.Exists(xmlPath))
+        {
+            return;
+        }
+
+        foreach (var fileInfo in new DirectoryInfo(xmlPath).EnumerateFiles("*.xml"))
+        {
+            options.IncludeXmlComments(fileInfo.FullName, true);
+        }
     }
 
     private OpenApiInfo CreateInfoForApiVersion(ApiVersionDescription description)
@@ -81,7 +100,10 @@ public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
             }
         };
 
-        if (description.IsDeprecated) info.Description += " This API version has been deprecated.";
+        if (description.IsDeprecated)
+        {
+            info.Description += " This API version has been deprecated.";
+        }
 
         return info;
     }

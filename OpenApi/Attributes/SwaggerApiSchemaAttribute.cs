@@ -9,7 +9,10 @@ public class SwaggerApiSchemaAttribute : SwaggerSchemaAttribute
 {
     public SwaggerApiSchemaAttribute(string defaultDescription, Type resourceType, string resourceName)
     {
-        if (resourceType is null) throw new ArgumentNullException(nameof(resourceType));
+        if (resourceType is null)
+        {
+            throw new ArgumentNullException(nameof(resourceType));
+        }
 
         var description = defaultDescription;
 
@@ -17,7 +20,9 @@ public class SwaggerApiSchemaAttribute : SwaggerSchemaAttribute
             .GetProperty(resourceName, BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic);
 
         if (property != null && property.PropertyType == typeof(string))
+        {
             description = property.GetValue(null, null) as string;
+        }
 
         Description = description;
     }

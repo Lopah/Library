@@ -9,11 +9,15 @@ public class OpenApiInfoOptions
     /// </summary>
     public string? Version { get; init; }
 
-    [Required] public string Title { get; init; }
+    [Required]
+    public string Title { get; init; }
 
-    [Required] public string Description { get; init; }
+    [Required]
+    public string Description { get; init; }
 
-    [Required] public ContactOptions Contact { get; set; }
+    [Required]
+    public ContactOptions Contact { get; set; }
 
-    [Required] public LicenceOptions Licence { get; init; }
+    [Required]
+    public LicenceOptions Licence { get; init; }
 }

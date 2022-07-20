@@ -48,27 +48,33 @@ internal static class Extensions
         var flows = new OpenApiOAuthFlows();
 
         if (securityOptions.ClientCredentials?.Scopes != null)
+        {
             flows.ClientCredentials = new()
             {
                 TokenUrl = securityOptions.ClientCredentials.TokenUrl,
                 RefreshUrl = securityOptions.ClientCredentials.RefreshUrl,
                 Scopes = securityOptions.ClientCredentials.Scopes.ToDictionary(key => key.Name, val => val.Description)
             };
+        }
 
         if (securityOptions.Implicit?.Scopes != null)
+        {
             flows.Implicit = new()
             {
                 AuthorizationUrl = securityOptions.Implicit.AuthorizationUrl,
                 Scopes = securityOptions.Implicit.Scopes.ToDictionary(key => key.Name, val => val.Description)
             };
+        }
 
         if (securityOptions.AuthorizationCode?.Scopes != null)
+        {
             flows.AuthorizationCode = new()
             {
                 AuthorizationUrl = securityOptions.AuthorizationCode.AuthorizationUrl,
                 TokenUrl = securityOptions.AuthorizationCode.TokenUrl,
                 Scopes = securityOptions.AuthorizationCode.Scopes.ToDictionary(key => key.Name, val => val.Description)
             };
+        }
 
         return flows;
     }

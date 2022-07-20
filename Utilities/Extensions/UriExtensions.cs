@@ -4,7 +4,10 @@ public static class UriExtensions
 {
     public static string GetUsername(this Uri uri)
     {
-        if (string.IsNullOrWhiteSpace(uri?.UserInfo)) return string.Empty;
+        if (string.IsNullOrWhiteSpace(uri?.UserInfo))
+        {
+            return string.Empty;
+        }
 
         var parts = uri.UserInfo.Split(':', 2);
 
@@ -13,7 +16,10 @@ public static class UriExtensions
 
     public static string GetPassword(this Uri uri)
     {
-        if (string.IsNullOrWhiteSpace(uri?.UserInfo)) return string.Empty;
+        if (string.IsNullOrWhiteSpace(uri?.UserInfo))
+        {
+            return string.Empty;
+        }
 
         var parts = uri.UserInfo.Split(':', 2);
 

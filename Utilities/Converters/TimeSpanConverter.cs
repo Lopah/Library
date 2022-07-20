@@ -14,7 +14,9 @@ public class TimeSpanConverter : JsonConverter<TimeSpan>
     public override TimeSpan Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         if (!TimeSpan.TryParse(reader.GetString(), CultureInfo.InvariantCulture, out var result))
+        {
             throw new JsonException();
+        }
 
         return result;
     }
@@ -25,7 +27,10 @@ public class TimeSpanConverter : JsonConverter<TimeSpan>
     /// <param name="options">An object that specifies serialization options to use.</param>
     public override void Write(Utf8JsonWriter writer, TimeSpan value, JsonSerializerOptions options)
     {
-        if (writer is null) throw new ArgumentNullException(nameof(writer));
+        if (writer is null)
+        {
+            throw new ArgumentNullException(nameof(writer));
+        }
 
         writer.WriteStringValue(value.ToString(@"hh\:mm", CultureInfo.InvariantCulture));
     }

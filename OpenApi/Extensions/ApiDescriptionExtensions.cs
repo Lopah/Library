@@ -12,7 +12,10 @@ public static class ApiDescriptionExtensions
 
         var swaggerOperation = operation as SwaggerApiOperationAttribute;
 
-        if (swaggerOperation is null) return apiDescription.GroupName ?? string.Empty;
+        if (swaggerOperation is null)
+        {
+            return apiDescription.GroupName ?? string.Empty;
+        }
 
         return swaggerOperation.Tag ?? string.Empty;
     }

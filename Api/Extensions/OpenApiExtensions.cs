@@ -15,9 +15,15 @@ public static class OpenApiExtensions
     public static void AddVersionedOpenApi(this IServiceCollection services, IConfiguration configuration,
         Action<SwaggerGenOptions>? setupAction = null)
     {
-        if (services is null) throw new ArgumentNullException(nameof(services));
+        if (services is null)
+        {
+            throw new ArgumentNullException(nameof(services));
+        }
 
-        if (configuration is null) throw new ArgumentNullException(nameof(configuration));
+        if (configuration is null)
+        {
+            throw new ArgumentNullException(nameof(configuration));
+        }
 
         services.AddOptions<OpenApiOptions>()
             .Bind(configuration.GetSection(nameof(OpenApiOptions))).ValidateDataAnnotations();
@@ -28,8 +34,10 @@ public static class OpenApiExtensions
             options =>
             {
                 if (openApiConfig?.DefaultApiVersion != null)
+                {
                     options.DefaultApiVersion = new(openApiConfig.DefaultApiVersion.Major!.Value,
                         openApiConfig.DefaultApiVersion.Minor!.Value);
+                }
 
                 options.ReportApiVersions = true;
                 options.AssumeDefaultVersionWhenUnspecified = true;
@@ -47,7 +55,10 @@ public static class OpenApiExtensions
                 options.SubstituteApiVersionInUrl = true;
             });
 
-        if (openApiConfig?.DisableSwagger == true) return;
+        if (openApiConfig?.DisableSwagger == true)
+        {
+            return;
+        }
 
         services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
         services.AddSwaggerGen(options =>
@@ -60,28 +71,40 @@ public static class OpenApiExtensions
     public static void UseVersionedOpenApi(this IApplicationBuilder app, IApiVersionDescriptionProvider provider,
         IOptions<OpenApiOptions> options)
     {
-        if (app is null) throw new ArgumentNullException(nameof(app));
+        if (app is null)
+        {
+            throw new ArgumentNullException(nameof(app));
+        }
 
-        if (provider is null) throw new ArgumentNullException(nameof(provider));
+        if (provider is null)
+        {
+            throw new ArgumentNullException(nameof(provider));
+        }
 
-        if (options is null) throw new ArgumentNullException(nameof(options));
+        if (options is null)
+        {
+            throw new ArgumentNullException(nameof(options));
+        }
 
         var optionValue = options.Value;
 
-        if (optionValue.DisableSwagger) return;
+        if (optionValue.DisableSwagger)
+        {
+            return;
+        }
 
         app.UseSwagger(s =>
             s.RouteTemplate = optionValue.RouteTemplate);
 
-        app.UseSwaggerUI(options =>
+        app.UseSwaggerUI(opts =>
         {
             foreach (var description in provider.ApiVersionDescriptions)
             {
-                options.RoutePrefix = optionValue.RoutePrefix;
+                opts.RoutePrefix = optionValue.RoutePrefix;
                 var path = optionValue.RouteTemplate.Replace("{documentName}", description.GroupName,
                     StringComparison.InvariantCultureIgnoreCase);
 
-                options.SwaggerEndpoint($"/{path}", description.GroupName.ToUpperInvariant());
+                opts.SwaggerEndpoint($"/{path}", description.GroupName.ToUpperInvariant());
             }
         });
     }

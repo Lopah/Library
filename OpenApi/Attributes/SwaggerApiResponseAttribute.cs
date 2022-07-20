@@ -16,14 +16,19 @@ public class SwaggerApiResponseAttribute : SwaggerResponseAttribute
     private static string? GetDescription(string operationId, Type resourceType, int statusCode,
         string? defaultDescription)
     {
-        if (resourceType is null) throw new ArgumentNullException(nameof(resourceType));
+        if (resourceType is null)
+        {
+            throw new ArgumentNullException(nameof(resourceType));
+        }
 
         var description = defaultDescription;
         var descriptionProperty = resourceType.GetProperty($"{operationId}{statusCode}{nameof(Description)}",
             BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic);
 
         if (descriptionProperty != null && descriptionProperty.PropertyType == typeof(string))
+        {
             description = descriptionProperty.GetValue(null, null) as string;
+        }
 
         return description;
     }

@@ -8,9 +8,15 @@ public class SwaggerFileOperationFilter : IOperationFilter
 {
     public void Apply(OpenApiOperation operation, OperationFilterContext context)
     {
-        if (operation is null) throw new ArgumentNullException(nameof(operation));
+        if (operation is null)
+        {
+            throw new ArgumentNullException(nameof(operation));
+        }
 
-        if (context is null) throw new ArgumentNullException(nameof(context));
+        if (context is null)
+        {
+            throw new ArgumentNullException(nameof(context));
+        }
 
         var binaryResponses = context.ApiDescription.SupportedResponseTypes
             .Where(x => x.Type == typeof(Stream) || x.Type == typeof(byte[]));

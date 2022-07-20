@@ -6,11 +6,20 @@ public static class RegexExtensions
 {
     public static bool IsValid(this Regex regex, object? value)
     {
-        if (regex is null) throw new ArgumentNullException(nameof(regex));
+        if (regex is null)
+        {
+            throw new ArgumentNullException(nameof(regex));
+        }
 
-        if (value is null) throw new ArgumentNullException(nameof(value));
+        if (value is null)
+        {
+            throw new ArgumentNullException(nameof(value));
+        }
 
-        if (value is not string stringValue) return false;
+        if (value is not string stringValue)
+        {
+            return false;
+        }
 
         return regex.IsMatch(stringValue);
     }

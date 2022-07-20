@@ -29,7 +29,10 @@ public class SwaggerApiOperationAttribute : SwaggerOperationAttribute
     public SwaggerApiOperationAttribute(string operationId, string defaultTag, Type resourceType,
         string? defaultSummary = null, string? defaultDescription = null)
     {
-        if (resourceType is null) throw new ArgumentNullException(nameof(resourceType));
+        if (resourceType is null)
+        {
+            throw new ArgumentNullException(nameof(resourceType));
+        }
 
         var tag = GetTag(operationId, resourceType, defaultTag);
         Tag = tag;
@@ -49,7 +52,9 @@ public class SwaggerApiOperationAttribute : SwaggerOperationAttribute
             BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic);
 
         if (tagProperty != null && tagProperty.PropertyType == typeof(string))
+        {
             tag = tagProperty.GetValue(null, null) as string;
+        }
 
         return tag;
     }
@@ -62,7 +67,9 @@ public class SwaggerApiOperationAttribute : SwaggerOperationAttribute
             BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic);
 
         if (summaryProperty != null && summaryProperty.PropertyType == typeof(string))
+        {
             summary = summaryProperty.GetValue(null, null) as string;
+        }
 
         return summary;
     }
@@ -75,7 +82,9 @@ public class SwaggerApiOperationAttribute : SwaggerOperationAttribute
             BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic);
 
         if (descriptionProperty != null && descriptionProperty.PropertyType == typeof(string))
+        {
             description = descriptionProperty.GetValue(null, null) as string;
+        }
 
         return description;
     }

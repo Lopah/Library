@@ -8,5 +8,5 @@ public class SecurityOptions
 
     public AuthorizationCodeOptions AuthorizationCode { get; init; }
 
-    public ApiKeyOptions ApiKey { get; init; }
+    public ApiKeyOptions? ApiKey { get; init; }
 }
