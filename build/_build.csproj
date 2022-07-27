@@ -19,7 +19,11 @@
         <PackageReference Include="Nuke.CodeGeneration" Version="6.1.2"/>
         <PackageReference Include="Nuke.Common" Version="6.1.2"/>
         <PackageReference Include="Nuke.GitHub" Version="3.0.0"/>
-        <PackageReference Include="GitVersion.CommandLine" Version="5.10.3"/>
+    </ItemGroup>
+    
+    <ItemGroup>
+        <PackageDownload Include="GitVersion.Tool" Version="[5.8.0]" />
+        <PackageDownload Include="JetBrains.ReSharper.GlobalTools" Version="[2020.3.2]" />
     </ItemGroup>
 
 </Project>
