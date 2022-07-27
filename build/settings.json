@@ -1,0 +1,6 @@
+{
+  "GitHubSettings": {
+    "GithubSource": "https://nuget.pkg.github.com/lopah/index.json",
+    "GithubApiKey": "ENVIRONMENT-SPECIFIC/SECRET"
+  }
+}

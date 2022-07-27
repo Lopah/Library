@@ -11,6 +11,7 @@
         <PackageTags>Lopah, Library</PackageTags>
         <IsPackable>true</IsPackable>
         <PackageId>Lopah.AspNetCore.Validation</PackageId>
+        <RepositoryUrl>https://github.com/Lopah/Library</RepositoryUrl>
         <PackageReleaseNotes>Created Validation extensions for use</PackageReleaseNotes>
     </PropertyGroup>
 

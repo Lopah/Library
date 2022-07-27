@@ -1,9 +1,12 @@
 using System;
 using System.Linq;
+using System.Reflection;
+using Nuke.Build.Custom.Components;
 using Nuke.Build.Custom.Helpers;
 using Nuke.Common;
 using Nuke.Common.CI;
 using Nuke.Common.CI.GitHubActions;
+using Nuke.Common.Execution;
 using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
@@ -19,15 +22,16 @@ using static Nuke.Build.Custom.GitHub.Branch;
 
 namespace Nuke.Build.Custom;
 
+[UnsetVisualStudioEnvironmentVariables]
 [DotNetVerbosityMapping]
+[ShutdownDotNetAfterServerBuild]
 [GitHubActions("release-main", GitHubActionsImage.UbuntuLatest,
     OnPushBranches = new[] { MasterBranch, MainBranch, ReleaseBranchPrefix + "/*" },
     InvokedTargets = new[] { nameof(PublishGitHubRelease), nameof(Push) },
     ImportSecrets = new[] { nameof(PersonalAccessToken) },
     PublishArtifacts = true,
     EnableGitHubToken = true)]
-[ShutdownDotNetAfterServerBuild]
-public partial class Build : NukeBuild
+public partial class Build : NukeBuild, IChangeLog
 {
     public static int Main() => Execute<Build>(x => x.Compile);
 
@@ -42,7 +46,7 @@ public partial class Build : NukeBuild
     [GitRepository]
     readonly GitRepository GitRepository;
 
-    [GitVersion(Framework = "net5.0", NoFetch = true)]
+    [GitVersion(NoFetch = true)]
     [Required]
     readonly GitVersion GitVersion;
 
@@ -119,7 +123,7 @@ public partial class Build : NukeBuild
         .DependsOn(Restore)
         .Executes(() =>
         {
-            var projects = Solution.Projects.Where(e => !e.Name.Contains("Test")).ToList();
+            var projects = Solution.Projects.Where(e => !e.Name.Contains("Test") && !e.Name.Contains("_build")).ToList();
 
             Log.Information($"Found {projects.Count()} projects");
             if (projects is null)
@@ -132,7 +136,6 @@ public partial class Build : NukeBuild
             {
                 DotNetBuild(s => s
                     .SetProcessWorkingDirectory(project.Directory)
-                    .SetOutputDirectory(BinDirectory / project.Name)
                     .SetConfiguration(Configuration)
                     .SetAssemblyVersion(GitVersion.AssemblySemVer)
                     .SetFileVersion(GitVersion.AssemblySemFileVer)
@@ -164,27 +167,27 @@ public partial class Build : NukeBuild
         .DependsOn(UnitTests)
         .Executes(() =>
         {
-            BinDirectory.GlobDirectories().ForEach(x =>
-            {
-                DotNetPack(s => s
-                    .SetProject(x)
-                    .SetOutputDirectory(OutputDirectory)
-                    .SetConfiguration(Configuration.Release)
-                    .SetVersion(GitVersion.NuGetVersionV2)
-                    .SetPackageReleaseNotes(SourceDirectory / "CHANGELOG.md")
-                    .EnableNoRestore());
-            });
-            
-            // Solution.Projects.Where(e => e.IsPackable()).ForEach(e =>
+            // BinDirectory.GlobDirectories().ForEach(x =>
             // {
             //     DotNetPack(s => s
-            //         .SetProject(e)
+            //         .SetProject(x)
             //         .SetOutputDirectory(OutputDirectory)
             //         .SetConfiguration(Configuration.Release)
             //         .SetVersion(GitVersion.NuGetVersionV2)
             //         .SetPackageReleaseNotes(SourceDirectory / "CHANGELOG.md")
             //         .EnableNoRestore());
             // });
+            
+            Solution.Projects.Where(e => e.IsPackable()).ForEach(e =>
+            {
+                DotNetPack(s => s
+                    .SetProject(e)
+                    .SetOutputDirectory(OutputDirectory)
+                    .SetConfiguration(Configuration.Release)
+                    .SetVersion(GitVersion.NuGetVersionV2)
+                    .SetPackageReleaseNotes(SourceDirectory / "CHANGELOG.md")
+                    .EnableNoRestore());
+            });
         });
 
     T From<T>()

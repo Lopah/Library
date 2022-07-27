@@ -11,6 +11,7 @@
         <PackageTags>Lopah, Library, API</PackageTags>
         <IsPackable>true</IsPackable>
         <PackageId>Lopah.AspNetCore.Api</PackageId>
+        <RepositoryUrl>https://github.com/Lopah/Library</RepositoryUrl>
         <PackageReleaseNotes>Created common API extensions for easier work</PackageReleaseNotes>
     </PropertyGroup>
 
