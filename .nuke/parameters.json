@@ -1,5 +1,4 @@
 {
   "$schema": "./build.schema.json",
-  "Solution": "Lopah.Library.sln",
-  "PersonalAccessToken": "v1:31kzf9ogmVrAxsZcoanKZSdsm0xNdsp6WEkgJJjPQiusL0ddkcgij6jKc+IHyBrG"
+  "Solution": "Lopah.Library.sln"
 }
