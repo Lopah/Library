@@ -20,7 +20,6 @@
         <PackageReference Include="Nuke.Common" Version="6.1.2"/>
         <PackageReference Include="Nuke.GitHub" Version="3.0.0"/>
         <PackageReference Include="GitVersion.CommandLine" Version="5.10.3"/>
-        <PackageReference Include="GitVersion.Tool" Version="5.10.3"/>
     </ItemGroup>
 
 </Project>
