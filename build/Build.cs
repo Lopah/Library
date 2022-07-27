@@ -40,7 +40,7 @@ public partial class Build : NukeBuild
     [GitRepository]
     readonly GitRepository GitRepository;
 
-    [GitVersion(NoFetch = true)]
+    [GitVersion(NoFetch = true, Framework = "net5.0")]
     readonly GitVersion GitVersion;
 
     [Parameter("Environment to use for dotnet tasks")]
