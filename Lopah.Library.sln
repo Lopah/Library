@@ -1,12 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenApi", "OpenApi\OpenApi.csproj", "{BBC69FDE-933F-4F2A-A7E4-769520913408}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenApi", "src\OpenApi\OpenApi.csproj", "{BBC69FDE-933F-4F2A-A7E4-769520913408}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Validation", "Validation\Validation.csproj", "{34935D6B-A7AA-472F-9A86-9084F93D8228}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Validation", "src\Validation\Validation.csproj", "{34935D6B-A7AA-472F-9A86-9084F93D8228}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilities", "Utilities\Utilities.csproj", "{F7FFD514-C6EC-4FDE-928D-751D4898270F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilities", "src\Utilities\Utilities.csproj", "{F7FFD514-C6EC-4FDE-928D-751D4898270F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "Api\Api.csproj", "{B9BF4C6A-1A26-4A98-8A2B-E4DC404B9B51}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "src\Api\Api.csproj", "{B9BF4C6A-1A26-4A98-8A2B-E4DC404B9B51}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{B5041EA6-A1CF-4582-A53D-24968946711F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,6 +16,8 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B5041EA6-A1CF-4582-A53D-24968946711F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5041EA6-A1CF-4582-A53D-24968946711F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BBC69FDE-933F-4F2A-A7E4-769520913408}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BBC69FDE-933F-4F2A-A7E4-769520913408}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BBC69FDE-933F-4F2A-A7E4-769520913408}.Release|Any CPU.ActiveCfg = Release|Any CPU
