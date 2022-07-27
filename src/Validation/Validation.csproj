@@ -9,6 +9,8 @@
         <Authors>Lopah (Daniel Jašek)</Authors>
         <RepositoryType>private</RepositoryType>
         <PackageTags>Lopah, Library</PackageTags>
+        <IsPackable>true</IsPackable>
+        <PackageId>Lopah.AspNetCore.Validation</PackageId>
         <PackageReleaseNotes>Created Validation extensions for use</PackageReleaseNotes>
     </PropertyGroup>
 

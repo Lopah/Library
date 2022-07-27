@@ -9,6 +9,8 @@
         <Authors>Lopah (Daniel Jašek)</Authors>
         <RepositoryType>private</RepositoryType>
         <PackageTags>Lopah, Library, Utilities</PackageTags>
+        <IsPackable>true</IsPackable>
+        <PackageId>Lopah.AspNetCore.Utilities</PackageId>
         <PackageReleaseNotes>Created Utilities extensions for easier work</PackageReleaseNotes>
     </PropertyGroup>
 
