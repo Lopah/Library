@@ -97,6 +97,7 @@ public partial class Build
     Target PublishGitHubRelease => _ => _
         .DependsOn(Pack)
         .Requires(() => PersonalAccessToken)
+        
         .OnlyWhenDynamic(() => GitRepository.IsOnReleaseBranch() || GitRepository.IsOnMainOrMasterBranch() ||
                                GitRepository.IsOnHotfixBranch() || true)
         .Executes<Task>(async () =>
@@ -113,6 +114,8 @@ public partial class Build
             var (gitHubOwner, repositoryName) = GetGitHubRepositoryInfo(GitRepository);
             var nugetPackages = OutputDirectory.GlobFiles("*.nupkg").NotNull("Could not find nuget packages.")
                 .Select(x => x.ToString()).ToArray();
+            
+            Log.Information($"Found total of {nugetPackages.Length} packages to publish.");
 
             await PublishRelease(conf => conf
                 .SetArtifactPaths(nugetPackages)

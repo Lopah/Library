@@ -119,7 +119,7 @@ public partial class Build : NukeBuild
         .DependsOn(Restore)
         .Executes(() =>
         {
-            var projects = Solution.GetProjects("*.Application.*").ToList();
+            var projects = Solution.Projects.Where(e => !e.Name.Contains("Test")).ToList();
 
             Log.Information($"Found {projects.Count()} projects");
             if (projects is null)
@@ -164,16 +164,27 @@ public partial class Build : NukeBuild
         .DependsOn(UnitTests)
         .Executes(() =>
         {
-            Solution.Projects.Where(e => e.IsPackable()).ForEach(e =>
+            BinDirectory.GlobDirectories().ForEach(x =>
             {
                 DotNetPack(s => s
-                    .SetProject(e)
+                    .SetProject(x)
                     .SetOutputDirectory(OutputDirectory)
                     .SetConfiguration(Configuration.Release)
                     .SetVersion(GitVersion.NuGetVersionV2)
                     .SetPackageReleaseNotes(SourceDirectory / "CHANGELOG.md")
                     .EnableNoRestore());
             });
+            
+            // Solution.Projects.Where(e => e.IsPackable()).ForEach(e =>
+            // {
+            //     DotNetPack(s => s
+            //         .SetProject(e)
+            //         .SetOutputDirectory(OutputDirectory)
+            //         .SetConfiguration(Configuration.Release)
+            //         .SetVersion(GitVersion.NuGetVersionV2)
+            //         .SetPackageReleaseNotes(SourceDirectory / "CHANGELOG.md")
+            //         .EnableNoRestore());
+            // });
         });
 
     T From<T>()
