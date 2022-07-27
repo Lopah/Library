@@ -19,11 +19,13 @@ using static Nuke.Build.Custom.GitHub.Branch;
 
 namespace Nuke.Build.Custom;
 
+[DotNetVerbosityMapping]
 [GitHubActions("release-main", GitHubActionsImage.UbuntuLatest,
     OnPushBranches = new[] { MasterBranch, MainBranch, ReleaseBranchPrefix + "/*" },
     InvokedTargets = new[] { nameof(PublishGitHubRelease), nameof(Push) },
     ImportSecrets = new[] { nameof(PersonalAccessToken) },
-    PublishArtifacts = true)]
+    PublishArtifacts = true,
+    EnableGitHubToken = true)]
 [ShutdownDotNetAfterServerBuild]
 public partial class Build : NukeBuild
 {
@@ -40,7 +42,8 @@ public partial class Build : NukeBuild
     [GitRepository]
     readonly GitRepository GitRepository;
 
-    [GitVersion(NoFetch = true, Framework = "net5.0")]
+    [GitVersion(Framework = "net5.0", NoFetch = true)]
+    [Required]
     readonly GitVersion GitVersion;
 
     [Parameter("Environment to use for dotnet tasks")]
