@@ -40,3 +40,4 @@ jobs:
         run: ./build.cmd PublishGitHubRelease Push
         env:
           PersonalAccessToken: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
