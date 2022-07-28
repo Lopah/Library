@@ -167,24 +167,13 @@ public partial class Build : NukeBuild, IChangeLog
         .DependsOn(UnitTests)
         .Executes(() =>
         {
-            // BinDirectory.GlobDirectories().ForEach(x =>
-            // {
-            //     DotNetPack(s => s
-            //         .SetProject(x)
-            //         .SetOutputDirectory(OutputDirectory)
-            //         .SetConfiguration(Configuration.Release)
-            //         .SetVersion(GitVersion.NuGetVersionV2)
-            //         .SetPackageReleaseNotes(SourceDirectory / "CHANGELOG.md")
-            //         .EnableNoRestore());
-            // });
-            
             Solution.Projects.Where(e => e.IsPackable()).ForEach(e =>
             {
                 DotNetPack(s => s
                     .SetProject(e)
                     .SetOutputDirectory(OutputDirectory)
-                    .SetConfiguration(Configuration.Release)
-                    .SetVersion(GitVersion.NuGetVersionV2)
+                    .SetConfiguration(Configuration)
+                    .SetVersion(GitVersion.MajorMinorPatch)
                     .SetPackageReleaseNotes(SourceDirectory / "CHANGELOG.md")
                     .EnableNoRestore());
             });
