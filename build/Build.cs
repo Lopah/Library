@@ -30,7 +30,9 @@ namespace Nuke.Build.Custom;
     InvokedTargets = new[] { nameof(PublishGitHubRelease), nameof(Push) },
     ImportSecrets = new[] { nameof(PersonalAccessToken) },
     PublishArtifacts = true,
-    EnableGitHubToken = true)]
+    EnableGitHubToken = true,
+    Submodules = GitHubActionsSubmodules.Recursive,
+    FetchDepth = 0)]
 public partial class Build : NukeBuild, IChangeLog
 {
     public static int Main() => Execute<Build>(x => x.Compile);
