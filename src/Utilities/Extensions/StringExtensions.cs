@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
+﻿using System.Globalization;
 using System.Text;
 using JetBrains.Annotations;
 
@@ -30,8 +27,9 @@ public static class StringExtensions
         }
 
         return string.Concat(
-                text.Normalize(NormalizationForm.FormD).Where(ch =>
-                    CharUnicodeInfo.GetUnicodeCategory(ch) != UnicodeCategory.NonSpacingMark))
+                text.Normalize(NormalizationForm.FormD).Where(
+                    ch =>
+                        CharUnicodeInfo.GetUnicodeCategory(ch) != UnicodeCategory.NonSpacingMark))
             .Normalize(NormalizationForm.FormC);
     }
 
@@ -81,13 +79,15 @@ public static class StringExtensions
 
         if (chunkSize < 1)
         {
-            throw new ArgumentOutOfRangeException(nameof(chunkSize),
+            throw new ArgumentOutOfRangeException(
+                nameof(chunkSize),
                 "Chunk size parameter has to be greater than zero.");
         }
 
         if (text.Length % chunkSize != 0)
         {
-            throw new ArgumentException("String is not divisible by specified chunk size without a remainder.",
+            throw new ArgumentException(
+                "String is not divisible by specified chunk size without a remainder.",
                 nameof(chunkSize));
         }
 

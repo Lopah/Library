@@ -1,7 +1,5 @@
-﻿using System;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -14,7 +12,9 @@ namespace Api.Extensions;
 
 public static class OpenApiExtensions
 {
-    public static void AddVersionedOpenApi(this IServiceCollection services, IConfiguration configuration,
+    public static void AddVersionedOpenApi(
+        this IServiceCollection services,
+        IConfiguration configuration,
         Action<SwaggerGenOptions>? setupAction = null)
     {
         if (services is null)
@@ -37,7 +37,8 @@ public static class OpenApiExtensions
             {
                 if (openApiConfig?.DefaultApiVersion != null)
                 {
-                    options.DefaultApiVersion = new(openApiConfig.DefaultApiVersion.Major!.Value,
+                    options.DefaultApiVersion = new(
+                        openApiConfig.DefaultApiVersion.Major!.Value,
                         openApiConfig.DefaultApiVersion.Minor!.Value);
                 }
 
@@ -63,14 +64,17 @@ public static class OpenApiExtensions
         }
 
         services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
-        services.AddSwaggerGen(options =>
-        {
-            options.OperationFilter<SwaggerFileOperationFilter>();
-            setupAction?.Invoke(options);
-        });
+        services.AddSwaggerGen(
+            options =>
+            {
+                options.OperationFilter<SwaggerFileOperationFilter>();
+                setupAction?.Invoke(options);
+            });
     }
 
-    public static void UseVersionedOpenApi(this IApplicationBuilder app, IApiVersionDescriptionProvider provider,
+    public static void UseVersionedOpenApi(
+        this IApplicationBuilder app,
+        IApiVersionDescriptionProvider provider,
         IOptions<OpenApiOptions> options)
     {
         if (app is null)
@@ -95,19 +99,23 @@ public static class OpenApiExtensions
             return;
         }
 
-        app.UseSwagger(s =>
-            s.RouteTemplate = optionValue.RouteTemplate);
+        app.UseSwagger(
+            s =>
+                s.RouteTemplate = optionValue.RouteTemplate);
 
-        app.UseSwaggerUI(opts =>
-        {
-            foreach (var description in provider.ApiVersionDescriptions)
+        app.UseSwaggerUI(
+            opts =>
             {
-                opts.RoutePrefix = optionValue.RoutePrefix;
-                var path = optionValue.RouteTemplate.Replace("{documentName}", description.GroupName,
-                    StringComparison.InvariantCultureIgnoreCase);
+                foreach (var description in provider.ApiVersionDescriptions)
+                {
+                    opts.RoutePrefix = optionValue.RoutePrefix;
+                    var path = optionValue.RouteTemplate.Replace(
+                        "{documentName}",
+                        description.GroupName,
+                        StringComparison.InvariantCultureIgnoreCase);
 
-                opts.SwaggerEndpoint($"/{path}", description.GroupName.ToUpperInvariant());
-            }
-        });
+                    opts.SwaggerEndpoint($"/{path}", description.GroupName.ToUpperInvariant());
+                }
+            });
     }
 }

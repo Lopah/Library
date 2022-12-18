@@ -1,5 +1,4 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using JetBrains.Annotations;
@@ -9,7 +8,7 @@ namespace Utilities.Converters;
 [PublicAPI]
 public class TimeSpanConverter : JsonConverter<TimeSpan>
 {
-    /// <summary>Reads and converts the JSON to type <typeparamref name="T" />.</summary>
+    /// <summary>Reads and converts the JSON to type <see cref="System.TimeSpan" />.</summary>
     /// <param name="reader">The reader.</param>
     /// <param name="typeToConvert">The type to convert.</param>
     /// <param name="options">An object that specifies serialization options to use.</param>

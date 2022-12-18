@@ -8,7 +8,10 @@ namespace OpenApi.Attributes;
 public class SwaggerVaryResponseHeaderAttribute : SwaggerResponseHeaderAttribute
 {
     public SwaggerVaryResponseHeaderAttribute()
-        : base((int)HttpStatusCode.OK, "Vary", "string",
+        : base(
+            (int)HttpStatusCode.OK,
+            "Vary",
+            "string",
             "Indicating which headers are used when selecting a representation of a resource")
     {
     }

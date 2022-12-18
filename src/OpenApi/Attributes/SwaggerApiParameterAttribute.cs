@@ -1,5 +1,4 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 using JetBrains.Annotations;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -17,7 +16,8 @@ public class SwaggerApiParameterAttribute : SwaggerParameterAttribute
 
         var description = defaultDescription;
 
-        var property = resourceType.GetProperty(resourceName,
+        var property = resourceType.GetProperty(
+            resourceName,
             BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic);
 
         if (property != null && property.PropertyType == typeof(string))

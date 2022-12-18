@@ -1,5 +1,4 @@
-﻿using System;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 
 namespace Utilities.Extensions;
 
@@ -8,7 +7,7 @@ public static class UriExtensions
 {
     public static string GetUsername(this Uri uri)
     {
-        if (string.IsNullOrWhiteSpace(uri?.UserInfo))
+        if (string.IsNullOrWhiteSpace(uri.UserInfo))
         {
             return string.Empty;
         }
@@ -20,7 +19,7 @@ public static class UriExtensions
 
     public static string GetPassword(this Uri uri)
     {
-        if (string.IsNullOrWhiteSpace(uri?.UserInfo))
+        if (string.IsNullOrWhiteSpace(uri.UserInfo))
         {
             return string.Empty;
         }

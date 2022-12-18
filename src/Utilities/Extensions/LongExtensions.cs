@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 
 namespace Utilities.Extensions;
 
@@ -11,7 +9,7 @@ public static class LongExtensions
     {
         if (n == 0)
         {
-            return new int[1] { 0 };
+            return new[] { 0 };
         }
 
         var digits = new List<int>();

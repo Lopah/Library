@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using System.Reflection;
 using Nuke.Build.Custom.Components;
 using Nuke.Build.Custom.Helpers;
 using Nuke.Common;
@@ -35,15 +34,10 @@ namespace Nuke.Build.Custom;
     FetchDepth = 0)]
 public partial class Build : NukeBuild, IChangeLog
 {
-    public static int Main() => Execute<Build>(x => x.Compile);
-
     static Environment _environment = Environment.Undefined;
 
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
     readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
-
-    [Solution]
-    readonly Solution Solution;
 
     [GitRepository]
     readonly GitRepository GitRepository;
@@ -51,6 +45,11 @@ public partial class Build : NukeBuild, IChangeLog
     [GitVersion(NoFetch = true)]
     [Required]
     readonly GitVersion GitVersion;
+
+    [Solution]
+    readonly Solution Solution;
+
+    string _githubAccessToken;
 
     [Parameter("Environment to use for dotnet tasks")]
     public static Environment DotNetEnvironment { get; private set; } = Environment.Undefined;
@@ -99,8 +98,6 @@ public partial class Build : NukeBuild, IChangeLog
         }
         set => _githubAccessToken = value;
     }
-
-    string _githubAccessToken;
 
     Target Clean => _ => _
         .Before(Restore)
@@ -180,6 +177,8 @@ public partial class Build : NukeBuild, IChangeLog
                     .EnableNoRestore());
             });
         });
+
+    public static int Main() => Execute<Build>(x => x.Compile);
 
     T From<T>()
         where T : INukeBuild

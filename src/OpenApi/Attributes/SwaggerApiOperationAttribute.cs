@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
+﻿using System.Reflection;
 using JetBrains.Annotations;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -28,8 +26,12 @@ public class SwaggerApiOperationAttribute : SwaggerOperationAttribute
         Tags = new List<string>(otherTags) { defaultTag }.ToArray();
     }
 
-    public SwaggerApiOperationAttribute(string operationId, string defaultTag, Type resourceType,
-        string? defaultSummary = null, string? defaultDescription = null)
+    public SwaggerApiOperationAttribute(
+        string operationId,
+        string defaultTag,
+        Type resourceType,
+        string? defaultSummary = null,
+        string? defaultDescription = null)
     {
         if (resourceType is null)
         {
@@ -50,7 +52,8 @@ public class SwaggerApiOperationAttribute : SwaggerOperationAttribute
     {
         var tag = defaultTag;
 
-        var tagProperty = resourceType.GetProperty($"{operationId}{nameof(Tag)}",
+        var tagProperty = resourceType.GetProperty(
+            $"{operationId}{nameof(Tag)}",
             BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic);
 
         if (tagProperty != null && tagProperty.PropertyType == typeof(string))
@@ -65,7 +68,8 @@ public class SwaggerApiOperationAttribute : SwaggerOperationAttribute
     {
         var summary = defaultSummary;
 
-        var summaryProperty = resourceType.GetProperty($"{operationId}{nameof(Summary)}",
+        var summaryProperty = resourceType.GetProperty(
+            $"{operationId}{nameof(Summary)}",
             BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic);
 
         if (summaryProperty != null && summaryProperty.PropertyType == typeof(string))
@@ -80,7 +84,8 @@ public class SwaggerApiOperationAttribute : SwaggerOperationAttribute
     {
         var description = defaultDescription;
 
-        var descriptionProperty = resourceType.GetProperty($"{operationId}{nameof(Description)}",
+        var descriptionProperty = resourceType.GetProperty(
+            $"{operationId}{nameof(Description)}",
             BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic);
 
         if (descriptionProperty != null && descriptionProperty.PropertyType == typeof(string))

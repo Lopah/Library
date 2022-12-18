@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using JetBrains.Annotations;
 using Microsoft.OpenApi.Models;
 
@@ -22,6 +21,7 @@ public class OpenApiOptions
 
     [Required]
     public string RoutePrefix { get; init; } = null!;
+
     public string RouteTemplate { get; init; } = DefaultRouteTemplate;
 
     public DefaultApiVersionOptions DefaultApiVersion { get; init; } = null!;

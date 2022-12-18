@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
+﻿using System.Globalization;
 using JetBrains.Annotations;
 
 namespace Utilities.Extensions;
@@ -41,7 +38,8 @@ public static class DateTimeOffsetExtensions
         return dateTimeValue.LocalDateTime.ToString(format, CultureInfo.InvariantCulture);
     }
 
-    public static IReadOnlyCollection<DateTimeOffset> GetLocalDatesOutOfRange(this DateTimeOffset sinceDate,
+    public static IReadOnlyCollection<DateTimeOffset> GetLocalDatesOutOfRange(
+        this DateTimeOffset sinceDate,
         DateTimeOffset untilDate)
     {
         var daysCount = untilDate.LocalDateTime.Date.Subtract(sinceDate.LocalDateTime.Date).Days;

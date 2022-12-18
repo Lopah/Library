@@ -24,7 +24,9 @@ public static class Settings
             .AddEnvironmentVariables();
 
         if (environment.Equals(Environment.Development))
+        {
             configurationBuilder.AddUserSecrets(Assembly.GetExecutingAssembly());
+        }
 
         configurationBuilder.AddEnvironmentVariables();
 

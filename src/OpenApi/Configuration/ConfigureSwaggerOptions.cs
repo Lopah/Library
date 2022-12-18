@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using System.Reflection;
+﻿using System.Reflection;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,7 +30,7 @@ public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
     }
 
     /// <summary>
-    ///     Invoked to configure a <typeparamref name="TOptions" /> instance.
+    ///     Invoked to configure a  <paramref name="options"/> instance.
     /// </summary>
     /// <param name="options">The options instance to configure.</param>
     public void Configure(SwaggerGenOptions options)

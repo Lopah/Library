@@ -10,7 +10,6 @@ using Nuke.Common.Git;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotCover;
 using Nuke.Common.Tools.DotNet;
-using Nuke.Common.Tools.Git;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Tools.ReportGenerator;
 using Nuke.Common.Utilities.Collections;
@@ -97,7 +96,6 @@ public partial class Build
     Target PublishGitHubRelease => _ => _
         .DependsOn(Pack)
         .Requires(() => PersonalAccessToken)
-        
         .OnlyWhenDynamic(() => GitRepository.IsOnReleaseBranch() || GitRepository.IsOnMainOrMasterBranch() ||
                                GitRepository.IsOnHotfixBranch() || true)
         .Executes<Task>(async () =>
@@ -114,7 +112,7 @@ public partial class Build
             var (gitHubOwner, repositoryName) = GetGitHubRepositoryInfo(GitRepository);
             var nugetPackages = OutputDirectory.GlobFiles("*.nupkg").NotNull("Could not find nuget packages.")
                 .Select(x => x.ToString()).ToArray();
-            
+
             Log.Information($"Found total of {nugetPackages.Length} packages to publish.");
 
             await PublishRelease(conf => conf
@@ -218,28 +216,28 @@ public partial class Build
 
         if (!hasCleanWorkingCopy && AutoStash)
         {
-            GitTasks.Git("stash");
+            Git("stash");
         }
 
-        GitTasks.Git($"checkout -b {branch} {start}");
+        Git($"checkout -b {branch} {start}");
 
         if (!hasCleanWorkingCopy && AutoStash)
         {
-            GitTasks.Git("stash apply");
+            Git("stash apply");
         }
     }
 
     void FinishReleaseOrHotfix()
     {
-        GitTasks.Git($"checkout {MasterBranch}");
-        GitTasks.Git($"merge --no-ff --no-edit {GitRepository.Branch}");
-        GitTasks.Git($"tag {MajorMinorPatchVersion}");
+        Git($"checkout {MasterBranch}");
+        Git($"merge --no-ff --no-edit {GitRepository.Branch}");
+        Git($"tag {MajorMinorPatchVersion}");
 
-        GitTasks.Git($"checkout {DevelopBranch}");
-        GitTasks.Git($"merge --no-ff --no-edit {GitRepository.Branch}");
+        Git($"checkout {DevelopBranch}");
+        Git($"merge --no-ff --no-edit {GitRepository.Branch}");
 
-        GitTasks.Git($"branch -D {GitRepository.Branch}");
+        Git($"branch -D {GitRepository.Branch}");
 
-        GitTasks.Git($"push origin {MasterBranch} {DevelopBranch} {MajorMinorPatchVersion}");
+        Git($"push origin {MasterBranch} {DevelopBranch} {MajorMinorPatchVersion}");
     }
 }

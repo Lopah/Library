@@ -1,5 +1,4 @@
-﻿using System;
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 using JetBrains.Annotations;
 
@@ -8,7 +7,7 @@ namespace Utilities.Converters;
 [PublicAPI]
 public class TrimmingConverter : JsonConverter<string>
 {
-    /// <summary>Reads and converts the JSON to type <typeparamref name="T" />.</summary>
+    /// <summary>Reads and converts the JSON to type <c>string</c>.</summary>
     /// <param name="reader">The reader.</param>
     /// <param name="typeToConvert">The type to convert.</param>
     /// <param name="options">An object that specifies serialization options to use.</param>
@@ -29,6 +28,6 @@ public class TrimmingConverter : JsonConverter<string>
             throw new ArgumentNullException(nameof(writer));
         }
 
-        writer.WriteStringValue(value?.Trim());
+        writer.WriteStringValue(value.Trim());
     }
 }

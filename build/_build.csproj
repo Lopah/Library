@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net7.0</TargetFramework>
         <RootNamespace>Nuke.Build.Custom</RootNamespace>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <NoWarn>CS0649;CS0169</NoWarn>
@@ -12,37 +12,37 @@
         <NukeTelemetryVersion>1</NukeTelemetryVersion>
         <NUKE_TELEMETRY_OPTOUT>1</NUKE_TELEMETRY_OPTOUT>
     </PropertyGroup>
-    
+
     <ItemGroup>
-        <Compile Remove="artifacts\**" />
-        <EmbeddedResource Remove="artifacts\**" />
-        <None Remove="artifacts\**" />
+        <Compile Remove="artifacts\**"/>
+        <EmbeddedResource Remove="artifacts\**"/>
+        <None Remove="artifacts\**"/>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Dangl.Nuke.CoberturaConverter" Version="2.0.0" />
-        <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
+        <PackageReference Include="Dangl.Nuke.CoberturaConverter" Version="2.0.0"/>
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1"/>
         <PackageReference Include="GitVersion.CommandLine" Version="5.10.3">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="6.0.0" />
-        <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="6.0.1" />
-        <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
-        <PackageReference Include="Nuke.CodeGeneration" Version="6.1.2" />
-        <PackageReference Include="Nuke.Common" Version="6.1.2" />
-        <PackageReference Include="Nuke.GitHub" Version="3.0.0" />
-    </ItemGroup>
-    
-    <ItemGroup>
-        <PackageDownload Include="GitVersion.Tool" Version="[5.6.7]" />
-        <PackageDownload Include="JetBrains.ReSharper.GlobalTools" Version="[2020.3.2]" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="6.0.0"/>
+        <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="6.0.1"/>
+        <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1"/>
+        <PackageReference Include="Nuke.CodeGeneration" Version="6.1.2"/>
+        <PackageReference Include="Nuke.Common" Version="6.1.2"/>
+        <PackageReference Include="Nuke.GitHub" Version="3.0.0"/>
     </ItemGroup>
 
     <ItemGroup>
-        <NukeMetadata Include="**/*.json" Exclude="bin/**;obj/**" />
-        <None Remove="*.csproj.DotSettings;*.ref.*.txt" />
-        <NukeMetadata Remove="artifacts\**" />
+        <PackageDownload Include="GitVersion.Tool" Version="[5.6.7]"/>
+        <PackageDownload Include="JetBrains.ReSharper.GlobalTools" Version="[2020.3.2]"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <NukeMetadata Include="**/*.json" Exclude="bin/**;obj/**"/>
+        <None Remove="*.csproj.DotSettings;*.ref.*.txt"/>
+        <NukeMetadata Remove="artifacts\**"/>
     </ItemGroup>
 
 </Project>

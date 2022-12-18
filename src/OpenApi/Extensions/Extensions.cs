@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Reflection;
+﻿using System.Reflection;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.PlatformAbstractions;
@@ -22,11 +21,13 @@ internal static class Extensions
 
     internal static void AddOAuthSecurityDefinition(this SwaggerGenOptions options, SecurityOptions securityOptions)
     {
-        options.AddSecurityDefinition("oauth2", new()
-        {
-            Type = SecuritySchemeType.OAuth2,
-            Flows = CreateOpenApiOAuthFlows(securityOptions)
-        });
+        options.AddSecurityDefinition(
+            "oauth2",
+            new()
+            {
+                Type = SecuritySchemeType.OAuth2,
+                Flows = CreateOpenApiOAuthFlows(securityOptions)
+            });
 
         options.OperationFilter<SecurityRequirementsOperationFilter>();
     }
@@ -35,13 +36,15 @@ internal static class Extensions
     {
         const string pskScheme = "psk";
 
-        options.AddSecurityDefinition(pskScheme, new()
-        {
-            In = ParameterLocation.Header,
-            Type = SecuritySchemeType.ApiKey,
-            Name = apiKeyOptions.HeaderName,
-            Description = apiKeyOptions.Description
-        });
+        options.AddSecurityDefinition(
+            pskScheme,
+            new()
+            {
+                In = ParameterLocation.Header,
+                Type = SecuritySchemeType.ApiKey,
+                Name = apiKeyOptions.HeaderName,
+                Description = apiKeyOptions.Description
+            });
 
         options.OperationFilter<SecurityRequirementsOperationFilter>(true, pskScheme);
     }

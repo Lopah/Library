@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using JetBrains.Annotations;
 
@@ -36,7 +33,8 @@ public static class ExpressionExtensions
         return Predicate<T>.False;
     }
 
-    internal static Expression<Func<T, bool>> OrElse<T>(this Expression<Func<T, bool>> left,
+    internal static Expression<Func<T, bool>> OrElse<T>(
+        this Expression<Func<T, bool>> left,
         Expression<Func<T, bool>> right)
     {
         if (Equals(left, right))

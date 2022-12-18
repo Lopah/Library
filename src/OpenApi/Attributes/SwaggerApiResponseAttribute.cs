@@ -1,5 +1,4 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 using JetBrains.Annotations;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -8,13 +7,20 @@ namespace OpenApi.Attributes;
 [PublicAPI]
 public class SwaggerApiResponseAttribute : SwaggerResponseAttribute
 {
-    public SwaggerApiResponseAttribute(string operationId, int statusCode, Type resourceType,
-        string? defaultDescription = null, Type? type = null)
+    public SwaggerApiResponseAttribute(
+        string operationId,
+        int statusCode,
+        Type resourceType,
+        string? defaultDescription = null,
+        Type? type = null)
         : base(statusCode, GetDescription(operationId, resourceType, statusCode, defaultDescription), type)
     {
     }
 
-    private static string? GetDescription(string operationId, Type resourceType, int statusCode,
+    private static string? GetDescription(
+        string operationId,
+        Type resourceType,
+        int statusCode,
         string? defaultDescription)
     {
         if (resourceType is null)
@@ -23,7 +29,8 @@ public class SwaggerApiResponseAttribute : SwaggerResponseAttribute
         }
 
         var description = defaultDescription;
-        var descriptionProperty = resourceType.GetProperty($"{operationId}{statusCode}{nameof(Description)}",
+        var descriptionProperty = resourceType.GetProperty(
+            $"{operationId}{statusCode}{nameof(Description)}",
             BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic);
 
         if (descriptionProperty != null && descriptionProperty.PropertyType == typeof(string))

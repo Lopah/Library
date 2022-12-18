@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace Utilities.Extensions;
+﻿namespace Utilities.Extensions;
 
 public static class EnumerableExtensions
 {
@@ -22,19 +15,33 @@ public static class EnumerableExtensions
         }
     }
 
-    public static TSource MaxOrDefault<TSource>(this IEnumerable<TSource>? source)
+    public static TSource? MaxOrDefault<TSource>(this IEnumerable<TSource>? source)
     {
-        
-        return source?.IsAny() == true ? source.Max() : default;
+        if (source is null)
+        {
+            return default;
+        }
+
+        var enumerable = source.ToList();
+        return enumerable.IsAny() ? enumerable.Max() : default;
     }
 
-    public static TResult MaxOrDefault<TSource, TResult>(this IEnumerable<TSource>? source,
+    public static TResult? MaxOrDefault<TSource, TResult>(
+        this IEnumerable<TSource>? source,
         Func<TSource, TResult> selector)
     {
-        return source.IsAny() ? source.Max(selector) : default;
+        if (source is null)
+        {
+            return default;
+        }
+        
+        var enumerable = source.ToList();
+        return enumerable.IsAny() ? enumerable.Max(selector) : default;
     }
 
-    public static bool HasEqualItems<T>(this IReadOnlyCollection<T> source, IReadOnlyCollection<T> destination,
+    public static bool HasEqualItems<T>(
+        this IReadOnlyCollection<T> source,
+        IReadOnlyCollection<T> destination,
         Func<T, T, bool> predicate)
     {
         if (source is null)
@@ -68,8 +75,11 @@ public static class EnumerableExtensions
         return source?.Any() == true;
     }
 
-    public static async Task AddIfAny<TSource, T>(this List<TSource> source, IEnumerable<T>? collection,
-        Func<IEnumerable<T>, CancellationToken, Task<TSource>> onAdd, CancellationToken cancellationToken)
+    public static async Task AddIfAny<TSource, T>(
+        this List<TSource> source,
+        IEnumerable<T>? collection,
+        Func<IEnumerable<T>, CancellationToken, Task<TSource>> onAdd,
+        CancellationToken cancellationToken)
     {
         if (source is null)
         {
@@ -81,14 +91,18 @@ public static class EnumerableExtensions
             throw new ArgumentNullException(nameof(onAdd));
         }
 
-        if (collection?.IsAny() == true)
+        var enumerable = collection?.ToList();
+        if (enumerable?.IsAny() == true)
         {
-            source.Add(await onAdd(collection, cancellationToken));
+            source.Add(await onAdd(enumerable, cancellationToken));
         }
     }
 
-    public static async Task AddRangeIfAny<TSource, T>(this List<TSource> source, IEnumerable<T> collection,
-        Func<IEnumerable<T>, CancellationToken, Task<IEnumerable<TSource>>> onAdd, CancellationToken cancellationToken)
+    public static async Task AddRangeIfAny<TSource, T>(
+        this List<TSource> source,
+        IEnumerable<T> collection,
+        Func<IEnumerable<T>, CancellationToken, Task<IEnumerable<TSource>>> onAdd,
+        CancellationToken cancellationToken)
     {
         if (source is null)
         {
@@ -100,13 +114,16 @@ public static class EnumerableExtensions
             throw new ArgumentNullException(nameof(onAdd));
         }
 
-        if (collection.IsAny())
+        var enumerable = collection.ToList();
+        if (enumerable.IsAny())
         {
-            source.AddRange(await onAdd(collection, cancellationToken));
+            source.AddRange(await onAdd(enumerable, cancellationToken));
         }
     }
 
-    public static async Task AddRangeIfAny<TSource, T>(this List<TSource> source, IEnumerable<T> collection,
+    public static async Task AddRangeIfAny<TSource, T>(
+        this List<TSource> source,
+        IEnumerable<T> collection,
         Func<IEnumerable<T>, CancellationToken, Task<IReadOnlyCollection<TSource>>> onAdd,
         CancellationToken cancellationToken)
     {
@@ -120,9 +137,10 @@ public static class EnumerableExtensions
             throw new ArgumentNullException(nameof(onAdd));
         }
 
-        if (collection.IsAny())
+        var enumerable = collection.ToList();
+        if (enumerable.IsAny())
         {
-            source.AddRange(await onAdd(collection, cancellationToken));
+            source.AddRange(await onAdd(enumerable, cancellationToken));
         }
     }
 

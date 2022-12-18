@@ -1,5 +1,4 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Text.Json.Serialization;
 using JetBrains.Annotations;
 using Microsoft.OpenApi.Models;
