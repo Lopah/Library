@@ -1,12 +1,21 @@
-next-version: 1.2.0
 assembly-versioning-scheme: MajorMinorPatch
 assembly-file-versioning-scheme: MajorMinorPatch
+assembly-informational-format: '{InformationalVersion}'
+increment: Inherit
+tag-prefix: '[vV]'
+continuous-delivery-fallback-tag: ci
+mode: ContinuousDelivery
+major-version-bump-message: '\+semver:\s?(breaking|major)'
+minor-version-bump-message: '\+semver:\s?(feature|minor)'
+patch-version-bump-message: '\+semver:\s?(fix|patch)'
+no-bump-message: '\+semver:\s?(none|skip)'
 
 branches:
     master:
-        increment: Minor
-        regex: (origin/)?master
-    develop:
         increment: Patch
+        regex: (origin/)?master
+        is-mainline: true
+    develop:
+        increment: Minor
         tag: beta
         regex: (origin/)?dev(elop)?(ment)?$
