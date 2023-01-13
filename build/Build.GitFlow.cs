@@ -107,7 +107,7 @@ public partial class Build
                 .Aggregate((c, n) => c + System.Environment.NewLine + n);
 
             var completeChangeLog = $"## {releaseTag}" + System.Environment.NewLine + latestChangeLog;
-            
+
             var (gitHubOwner, repositoryName) = GetGitHubRepositoryInfo(GitRepository);
             var nugetPackages = OutputDirectory.GlobFiles("*.nupkg").NotNull("Could not find nuget packages.")
                 .Select(x => x.ToString()).ToArray();
