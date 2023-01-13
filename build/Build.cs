@@ -28,6 +28,7 @@ namespace Nuke.Build.Custom;
     OnPushBranches = new[] { MasterBranch, MainBranch, ReleaseBranchPrefix + "/*" },
     InvokedTargets = new[] { nameof(PublishGitHubRelease), nameof(Push) },
     ImportSecrets = new[] { nameof(NugetApiKey) },
+    EnableGitHubToken = true,
     PublishArtifacts = true,
     Submodules = GitHubActionsSubmodules.Recursive,
     FetchDepth = 0)]
