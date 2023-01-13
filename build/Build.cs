@@ -27,6 +27,7 @@ namespace Nuke.Build.Custom;
 [GitHubActions("release-main", GitHubActionsImage.UbuntuLatest,
     OnPushBranches = new[] { MasterBranch, MainBranch, ReleaseBranchPrefix + "/*" },
     InvokedTargets = new[] { nameof(PublishGitHubRelease), nameof(Push) },
+    ImportSecrets = new[] { nameof(NugetApiKey) },
     PublishArtifacts = true,
     Submodules = GitHubActionsSubmodules.Recursive,
     FetchDepth = 0)]
@@ -76,9 +77,25 @@ public partial class Build : NukeBuild, IChangeLog
                 _environment = Environment.Undefined;
                 return;
             }
-
+            
             _environment = value;
         }
+    }
+    
+    [Parameter]
+    [Secret]
+    string NugetApiKey
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(_githubAccessToken))
+            {
+                _githubAccessToken = Settings.GitHubSettings.NugetOrgApiKey;
+            }
+
+            return _githubAccessToken;
+        }
+        set => _githubAccessToken = value;
     }
 
     Target Clean => _ => _

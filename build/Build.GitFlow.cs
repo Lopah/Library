@@ -129,6 +129,7 @@ public partial class Build
     Target Push => _ => _
         .DependsOn(Pack)
         .OnlyWhenStatic(() => !string.IsNullOrEmpty(Settings.GitHubSettings.GithubSource))
+        .Requires(() => NugetApiKey)
         .Executes(() =>
         {
             Log.Information("Running push to packages directory");
@@ -139,6 +140,7 @@ public partial class Build
                     DotNetNuGetPush(s => s
                         .SetTargetPath(x)
                         .SetSource(Settings.GitHubSettings.GithubSource)
+                        .SetApiKey(NugetApiKey)
                     );
                 });
         });

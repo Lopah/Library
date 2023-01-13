@@ -1,5 +1,6 @@
 {
   "GitHubSettings": {
-    "GithubSource": "https://nuget.pkg.github.com/index.json"
+    "GithubSource": "https://nuget.pkg.github.com/index.json",
+    "NugetOrgApiKey": "ENVIRONMENT-SPECIFIC/SECRET"
   }
 }
