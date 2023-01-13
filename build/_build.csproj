@@ -11,6 +11,7 @@
         <NukeScriptDirectory>..</NukeScriptDirectory>
         <NukeTelemetryVersion>1</NukeTelemetryVersion>
         <NUKE_TELEMETRY_OPTOUT>1</NUKE_TELEMETRY_OPTOUT>
+        <UserSecretsId>49c89975-e514-43aa-ba68-6c4c1ba5b837</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>

@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using System.Linq;
+using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using OpenApi.Attributes;
 
