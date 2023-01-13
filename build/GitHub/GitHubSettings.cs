@@ -7,6 +7,4 @@ namespace Nuke.Build.Custom.GitHub;
 public class GitHubSettings
 {
     public string GithubSource { get; [UsedImplicitly] init; }
-
-    public string GithubAccessToken { get; [UsedImplicitly] init; }
 }

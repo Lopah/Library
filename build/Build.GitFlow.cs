@@ -95,7 +95,6 @@ public partial class Build
     [PublicAPI]
     Target PublishGitHubRelease => _ => _
         .DependsOn(Pack)
-        .Requires(() => PersonalAccessToken)
         .OnlyWhenDynamic(() => GitRepository.IsOnReleaseBranch() || GitRepository.IsOnMainOrMasterBranch() ||
                                GitRepository.IsOnHotfixBranch() || true)
         .Executes<Task>(async () =>
@@ -122,7 +121,6 @@ public partial class Build
                 .SetRepositoryName(repositoryName)
                 .SetRepositoryOwner(gitHubOwner)
                 .SetTag(releaseTag)
-                .SetToken(PersonalAccessToken)
                 .DisablePrerelease()
             );
         });
@@ -131,7 +129,6 @@ public partial class Build
     Target Push => _ => _
         .DependsOn(Pack)
         .OnlyWhenStatic(() => !string.IsNullOrEmpty(Settings.GitHubSettings.GithubSource))
-        .Requires(() => PersonalAccessToken)
         .Executes(() =>
         {
             Log.Information("Running push to packages directory");
@@ -142,7 +139,6 @@ public partial class Build
                     DotNetNuGetPush(s => s
                         .SetTargetPath(x)
                         .SetSource(Settings.GitHubSettings.GithubSource)
-                        .SetApiKey(PersonalAccessToken)
                     );
                 });
         });

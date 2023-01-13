@@ -27,9 +27,7 @@ namespace Nuke.Build.Custom;
 [GitHubActions("release-main", GitHubActionsImage.UbuntuLatest,
     OnPushBranches = new[] { MasterBranch, MainBranch, ReleaseBranchPrefix + "/*" },
     InvokedTargets = new[] { nameof(PublishGitHubRelease), nameof(Push) },
-    ImportSecrets = new[] { nameof(PersonalAccessToken) },
     PublishArtifacts = true,
-    EnableGitHubToken = true,
     Submodules = GitHubActionsSubmodules.Recursive,
     FetchDepth = 0)]
 public partial class Build : NukeBuild, IChangeLog
@@ -81,22 +79,6 @@ public partial class Build : NukeBuild, IChangeLog
 
             _environment = value;
         }
-    }
-
-    [Parameter]
-    [Secret]
-    string PersonalAccessToken
-    {
-        get
-        {
-            if (string.IsNullOrEmpty(_githubAccessToken))
-            {
-                _githubAccessToken = Settings.GitHubSettings.GithubAccessToken;
-            }
-
-            return _githubAccessToken;
-        }
-        set => _githubAccessToken = value;
     }
 
     Target Clean => _ => _
