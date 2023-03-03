@@ -11,12 +11,6 @@ namespace Lopah.Library.Utilities.Tests.Converters;
 
 public class DateConverterTests
 {
-
-    private class Data
-    {
-        [JsonPropertyName("date")]
-        public DateTimeOffset? Date { get; set; }
-    }
     [Fact]
     public void DateConverter_GivenDateInYYYYMMDDWithTimeZoneInfo_ConvertsItCorrectly()
     {
@@ -31,12 +25,14 @@ public class DateConverterTests
         var byteArray = Encoding.UTF8.GetBytes(json);
         var readonlySpan = new ReadOnlySpan<byte>(byteArray);
 
-        var jsonReader = new Utf8JsonReader(readonlySpan, new JsonReaderOptions
-        {
-            AllowTrailingCommas = true,
-            CommentHandling = JsonCommentHandling.Disallow,
-            MaxDepth = 0
-        });
+        var jsonReader = new Utf8JsonReader(
+            readonlySpan,
+            new JsonReaderOptions
+            {
+                AllowTrailingCommas = true,
+                CommentHandling = JsonCommentHandling.Disallow,
+                MaxDepth = 0
+            });
 
         var output = JsonSerializer.Deserialize<Data>(
             ref jsonReader,
@@ -69,26 +65,29 @@ public class DateConverterTests
              "date": "1998-26-10"
             } 
         """;
-            
 
-            var output = new Func<Data?>(() =>
+
+            var output = new Func<Data?>(
+                () =>
                 {
                     using var reader = new StringReader(json);
 
                     var byteArray = Encoding.UTF8.GetBytes(json);
                     var readonlySpan = new ReadOnlySpan<byte>(byteArray);
-                    
-                    
-                    var jsonReader = new Utf8JsonReader(readonlySpan, new JsonReaderOptions
-                    {
-                        AllowTrailingCommas = true,
-                        CommentHandling = JsonCommentHandling.Disallow,
-                        MaxDepth = 0
-                    });
-                    
+
+
+                    var jsonReader = new Utf8JsonReader(
+                        readonlySpan,
+                        new JsonReaderOptions
+                        {
+                            AllowTrailingCommas = true,
+                            CommentHandling = JsonCommentHandling.Disallow,
+                            MaxDepth = 0
+                        });
+
                     return JsonSerializer.Deserialize<Data>(
                         ref jsonReader,
-                        options: new JsonSerializerOptions
+                        new JsonSerializerOptions
                         {
                             AllowTrailingCommas = true,
                             ReadCommentHandling = JsonCommentHandling.Disallow,
@@ -114,12 +113,14 @@ public class DateConverterTests
         var byteArray = Encoding.UTF8.GetBytes(json);
         var readonlySpan = new ReadOnlySpan<byte>(byteArray);
 
-        var jsonReader = new Utf8JsonReader(readonlySpan, new JsonReaderOptions
-        {
-            AllowTrailingCommas = true,
-            CommentHandling = JsonCommentHandling.Disallow,
-            MaxDepth = 0
-        });
+        var jsonReader = new Utf8JsonReader(
+            readonlySpan,
+            new JsonReaderOptions
+            {
+                AllowTrailingCommas = true,
+                CommentHandling = JsonCommentHandling.Disallow,
+                MaxDepth = 0
+            });
 
         var output = JsonSerializer.Deserialize<Data>(
             ref jsonReader,
@@ -142,7 +143,7 @@ public class DateConverterTests
         date.Second.Should().Be(10);
         date.Millisecond.Should().Be(531);
     }
-    
+
     [Fact]
     public void DateConverter_GivenDateInLocalFormatWithTimeZoneInfo_ReturnsCorrectly()
     {
@@ -157,12 +158,14 @@ public class DateConverterTests
         var byteArray = Encoding.UTF8.GetBytes(json);
         var readonlySpan = new ReadOnlySpan<byte>(byteArray);
 
-        var jsonReader = new Utf8JsonReader(readonlySpan, new JsonReaderOptions
-        {
-            AllowTrailingCommas = true,
-            CommentHandling = JsonCommentHandling.Disallow,
-            MaxDepth = 0
-        });
+        var jsonReader = new Utf8JsonReader(
+            readonlySpan,
+            new JsonReaderOptions
+            {
+                AllowTrailingCommas = true,
+                CommentHandling = JsonCommentHandling.Disallow,
+                MaxDepth = 0
+            });
 
         var output = JsonSerializer.Deserialize<Data>(
             ref jsonReader,
@@ -184,5 +187,11 @@ public class DateConverterTests
         date.Minute.Should().Be(11);
         date.Second.Should().Be(10);
         date.Millisecond.Should().Be(531);
+    }
+
+    private class Data
+    {
+        [JsonPropertyName("date")]
+        public DateTimeOffset? Date { get; set; }
     }
 }

@@ -10,7 +10,8 @@ namespace Utilities.Converters;
 public class DateOnlyConverter : JsonConverter<DateOnly>
 {
     private string DatePattern = "yyyy-MM-dd";
-    /// <summary>Reads and converts the JSON to type <see cref="DateOnly"/>.</summary>
+
+    /// <summary>Reads and converts the JSON to type <see cref="DateOnly" />.</summary>
     /// <param name="reader">The reader.</param>
     /// <param name="typeToConvert">The type to convert.</param>
     /// <param name="options">An object that specifies serialization options to use.</param>

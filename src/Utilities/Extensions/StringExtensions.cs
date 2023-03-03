@@ -85,7 +85,7 @@ public static class StringExtensions
     }
 
     /// <summary>
-    /// Will reduce string if it exceeds maxlength and appends three dot chars
+    ///     Will reduce string if it exceeds maxlength and appends three dot chars
     /// </summary>
     /// <param name="text"></param>
     /// <param name="maxLength"></param>

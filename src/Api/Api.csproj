@@ -15,23 +15,23 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="JetBrains.Annotations" Version="2022.3.1" />
-        <PackageReference Include="Macross.Json.Extensions" Version="3.0.0" />
-        <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.*" />
-        <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.*" />
-        <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.*" />
-        <PackageReference Include="Microsoft.AspNetCore.Mvc.Formatters.Json" Version="2.2.*" />
-        <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.Json" Version="7.0.*" />
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.*" />
-        <PackageReference Include="Microsoft.Extensions.Options" Version="7.0.*" />
-        <PackageReference Include="Microsoft.Extensions.Options.DataAnnotations" Version="7.0.*" />
-        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.5.*" />
-        <PackageReference Include="System.Text.Json" Version="7.0.*" />
+        <PackageReference Include="JetBrains.Annotations" Version="2022.3.1"/>
+        <PackageReference Include="Macross.Json.Extensions" Version="3.0.0"/>
+        <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.*"/>
+        <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.*"/>
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.*"/>
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Formatters.Json" Version="2.2.*"/>
+        <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.Json" Version="7.0.*"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.*"/>
+        <PackageReference Include="Microsoft.Extensions.Options" Version="7.0.*"/>
+        <PackageReference Include="Microsoft.Extensions.Options.DataAnnotations" Version="7.0.*"/>
+        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.5.*"/>
+        <PackageReference Include="System.Text.Json" Version="7.0.*"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\OpenApi\OpenApi.csproj" />
-        <ProjectReference Include="..\Utilities\Utilities.csproj" />
+        <ProjectReference Include="..\OpenApi\OpenApi.csproj"/>
+        <ProjectReference Include="..\Utilities\Utilities.csproj"/>
     </ItemGroup>
 
 </Project>

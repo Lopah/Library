@@ -33,7 +33,7 @@ public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
     }
 
     /// <summary>
-    ///     Invoked to configure a  <paramref name="options"/> instance.
+    ///     Invoked to configure a  <paramref name="options" /> instance.
     /// </summary>
     /// <param name="options">The options instance to configure.</param>
     public void Configure(SwaggerGenOptions options)

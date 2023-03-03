@@ -15,7 +15,7 @@ public class StringExtensions
 
         result.Should().BeEquivalentTo(@string);
     }
-    
+
     [Fact]
     public void ReduceLength_With5MaxLengthStringAndEntered6LengthString_ShortensIt()
     {

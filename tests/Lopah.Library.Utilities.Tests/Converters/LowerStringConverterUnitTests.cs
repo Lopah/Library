@@ -8,12 +8,6 @@ namespace Lopah.Library.Utilities.Tests.Converters;
 
 public class LowerStringConverterTests
 {
-    private class Data
-    {
-        [JsonConverter(typeof(LowerStringConverter))]
-        public string Something { get; set; } = string.Empty;
-
-    }
     [Fact]
     public void LowerStringConverter_GivenUpperCaseString_LowersIt()
     {
@@ -29,5 +23,11 @@ public class LowerStringConverterTests
         data.Should().NotBeNull();
 
         data!.Something.Should().BeLowerCased();
+    }
+
+    private class Data
+    {
+        [JsonConverter(typeof(LowerStringConverter))]
+        public string Something { get; set; } = string.Empty;
     }
 }

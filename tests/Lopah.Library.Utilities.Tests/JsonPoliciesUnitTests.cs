@@ -9,16 +9,6 @@ namespace Lopah.Library.Utilities.Tests;
 
 public class JsonPolicies
 {
-    private enum Test
-    {
-        HelloWorld
-    }
-    private class Data
-    {
-        // ReSharper disable once UnusedAutoPropertyAccessor.Local
-        public Test Something { get; set; }
-        
-    }
     [Fact]
     public void SnakeCaseNamingPolicy_GivenTwoWordEnum_SnakeCasesIt()
     {
@@ -27,15 +17,17 @@ public class JsonPolicies
             Something = Test.HelloWorld
         };
 
-        var data = JsonSerializer.Serialize(test, new JsonSerializerOptions
-        {
-            Converters = { new JsonStringEnumConverter(JsonNamingPolicies.SnakeCase) }
-        });
+        var data = JsonSerializer.Serialize(
+            test,
+            new JsonSerializerOptions
+            {
+                Converters = { new JsonStringEnumConverter(JsonNamingPolicies.SnakeCase) }
+            });
 
         data.Should().NotBeEmpty();
         data.Should().Match(s => s.Contains("hello_world", StringComparison.InvariantCulture));
     }
-    
+
     [Fact]
     public void UpperSnakeCaseNamingPolicy_GivenTwoWordEnum_UpperSnakeCasesIt()
     {
@@ -44,12 +36,25 @@ public class JsonPolicies
             Something = Test.HelloWorld
         };
 
-        var data = JsonSerializer.Serialize(test, new JsonSerializerOptions
-        {
-            Converters = { new JsonStringEnumConverter(JsonNamingPolicies.UpperSnakeCase) }
-        });
+        var data = JsonSerializer.Serialize(
+            test,
+            new JsonSerializerOptions
+            {
+                Converters = { new JsonStringEnumConverter(JsonNamingPolicies.UpperSnakeCase) }
+            });
 
         data.Should().NotBeEmpty();
         data.Should().Match(s => s.Contains("HELLO_WORLD", StringComparison.InvariantCulture));
+    }
+
+    private enum Test
+    {
+        HelloWorld
+    }
+
+    private class Data
+    {
+        // ReSharper disable once UnusedAutoPropertyAccessor.Local
+        public Test Something { get; set; }
     }
 }

@@ -42,7 +42,7 @@ public static class EnumerableExtensions
         {
             return default;
         }
-        
+
         var enumerable = source.ToList();
         return enumerable.HasAny() ? enumerable.Max(selector) : default;
     }
@@ -130,7 +130,7 @@ public static class EnumerableExtensions
     }
 
     /// <summary>
-    /// Works same as <see cref="List{T}.ForEach" />
+    ///     Works same as <see cref="List{T}.ForEach" />
     /// </summary>
     /// <param name="source">source collection</param>
     /// <param name="action">what action to do on each element</param>
