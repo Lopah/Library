@@ -166,8 +166,8 @@ public partial class Build : NukeBuild, IChangeLog
     /// </summary>
     Target Pack => _ => _
         .Description("Packs the shared library in this project to be then shared via NuGet")
-        .DependsOn(Compile, Changelog)
-        .DependsOn(UnitTests)
+        .DependsOn(Compile, Changelog, UnitTests)
+        .After(UnitTests)
         .Executes(() =>
         {
             Solution.Projects.Where(e => e.IsPackable()).ForEach(e =>
