@@ -10,6 +10,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "src\Api\Api.csproj",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{B5041EA6-A1CF-4582-A53D-24968946711F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{A5E7604D-0B63-4B85-A04B-9F5289DB0671}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lopah.Library.Utilities.Tests", "tests\Lopah.Library.Utilities.Tests\Lopah.Library.Utilities.Tests.csproj", "{4C107DE4-B055-4753-9282-5384C4BAB709}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lopah.Library.Validation.Tests", "tests\Lopah.Library.Validation.Tests\Lopah.Library.Validation.Tests.csproj", "{9034D3C2-B17C-4688-9390-82928E94B105}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,7 +40,17 @@ Global
 		{B9BF4C6A-1A26-4A98-8A2B-E4DC404B9B51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B9BF4C6A-1A26-4A98-8A2B-E4DC404B9B51}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B9BF4C6A-1A26-4A98-8A2B-E4DC404B9B51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C107DE4-B055-4753-9282-5384C4BAB709}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C107DE4-B055-4753-9282-5384C4BAB709}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C107DE4-B055-4753-9282-5384C4BAB709}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C107DE4-B055-4753-9282-5384C4BAB709}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9034D3C2-B17C-4688-9390-82928E94B105}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9034D3C2-B17C-4688-9390-82928E94B105}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9034D3C2-B17C-4688-9390-82928E94B105}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9034D3C2-B17C-4688-9390-82928E94B105}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{4C107DE4-B055-4753-9282-5384C4BAB709} = {A5E7604D-0B63-4B85-A04B-9F5289DB0671}
+		{9034D3C2-B17C-4688-9390-82928E94B105} = {A5E7604D-0B63-4B85-A04B-9F5289DB0671}
 	EndGlobalSection
 EndGlobal

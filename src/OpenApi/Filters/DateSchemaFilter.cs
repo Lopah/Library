@@ -27,7 +27,7 @@ public class DataSchemaFilter : ISchemaFilter
 
         var converterAttribute = context.MemberInfo?.GetCustomAttribute<JsonConverterAttribute>();
 
-        if (converterAttribute != null && converterAttribute.ConverterType == typeof(DateConverter))
+        if (converterAttribute != null && converterAttribute.ConverterType == typeof(DateTimeConverter))
         {
             schema.Format = DateFormat;
         }

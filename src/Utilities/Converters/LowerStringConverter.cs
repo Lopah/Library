@@ -13,9 +13,9 @@ public class LowerStringConverter : JsonConverter<string>
     /// <param name="typeToConvert">The type to convert.</param>
     /// <param name="options">An object that specifies serialization options to use.</param>
     /// <returns>The converted value.</returns>
-    public override string? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    public override string Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        return reader.GetString()?.Trim().ToLowerInvariant();
+        return reader.GetString()?.Trim().ToLowerInvariant() ?? string.Empty;
     }
 
     /// <summary>Writes a specified value as JSON.</summary>

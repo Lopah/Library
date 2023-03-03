@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 
 namespace Utilities.Extensions;
 
+[PublicAPI]
 public static class EnumerableExtensions
 {
     public static IEnumerable<List<T>> SplitList<T>(this List<T> locations, int chunkSize = 30)
@@ -29,7 +31,7 @@ public static class EnumerableExtensions
         }
 
         var enumerable = source.ToList();
-        return enumerable.IsAny() ? enumerable.Max() : default;
+        return enumerable.HasAny() ? enumerable.Max() : default;
     }
 
     public static TResult? MaxOrDefault<TSource, TResult>(
@@ -42,7 +44,7 @@ public static class EnumerableExtensions
         }
         
         var enumerable = source.ToList();
-        return enumerable.IsAny() ? enumerable.Max(selector) : default;
+        return enumerable.HasAny() ? enumerable.Max(selector) : default;
     }
 
     public static bool HasEqualItems<T>(
@@ -76,12 +78,12 @@ public static class EnumerableExtensions
         return true;
     }
 
-    public static bool IsAny<T>(this IEnumerable<T>? source)
+    public static bool HasAny<T>(this IEnumerable<T>? source)
     {
         return source?.Any() == true;
     }
 
-    public static async Task AddIfAny<TSource, T>(
+    public static async Task AddIfAnyAsync<TSource, T>(
         this List<TSource> source,
         IEnumerable<T>? collection,
         Func<IEnumerable<T>, CancellationToken, Task<TSource>> onAdd,
@@ -98,13 +100,13 @@ public static class EnumerableExtensions
         }
 
         var enumerable = collection?.ToList();
-        if (enumerable?.IsAny() == true)
+        if (enumerable.HasAny())
         {
-            source.Add(await onAdd(enumerable, cancellationToken));
+            source.Add(await onAdd(enumerable!, cancellationToken));
         }
     }
 
-    public static async Task AddRangeIfAny<TSource, T>(
+    public static async Task AddRangeIfAnyAsync<TSource, T>(
         this List<TSource> source,
         IEnumerable<T> collection,
         Func<IEnumerable<T>, CancellationToken, Task<IEnumerable<TSource>>> onAdd,
@@ -121,36 +123,21 @@ public static class EnumerableExtensions
         }
 
         var enumerable = collection.ToList();
-        if (enumerable.IsAny())
+        if (enumerable.HasAny())
         {
             source.AddRange(await onAdd(enumerable, cancellationToken));
         }
     }
 
-    public static async Task AddRangeIfAny<TSource, T>(
-        this List<TSource> source,
-        IEnumerable<T> collection,
-        Func<IEnumerable<T>, CancellationToken, Task<IReadOnlyCollection<TSource>>> onAdd,
-        CancellationToken cancellationToken)
-    {
-        if (source is null)
-        {
-            throw new ArgumentNullException(nameof(source));
-        }
-
-        if (onAdd is null)
-        {
-            throw new ArgumentNullException(nameof(onAdd));
-        }
-
-        var enumerable = collection.ToList();
-        if (enumerable.IsAny())
-        {
-            source.AddRange(await onAdd(enumerable, cancellationToken));
-        }
-    }
-
-    public static void ForEach<T>(this IEnumerable<T> source, Action<T> action)
+    /// <summary>
+    /// Works same as <see cref="List{T}.ForEach" />
+    /// </summary>
+    /// <param name="source">source collection</param>
+    /// <param name="action">what action to do on each element</param>
+    /// <typeparam name="T"></typeparam>
+    /// <exception cref="ArgumentNullException">If the source is null</exception>
+    /// <exception cref="ArgumentNullException">If the action is null</exception>
+    public static void ForEach<T>(this IReadOnlyCollection<T> source, Action<T> action)
     {
         if (source is null)
         {
@@ -165,24 +152,6 @@ public static class EnumerableExtensions
         foreach (var o in source)
         {
             action(o);
-        }
-    }
-
-    public static void ForEach<T>(this IReadOnlyList<T> source, Action<T, int> action)
-    {
-        if (source is null)
-        {
-            throw new ArgumentNullException(nameof(source));
-        }
-
-        if (action is null)
-        {
-            throw new ArgumentNullException(nameof(action));
-        }
-
-        for (var i = 0; i < source.Count; ++i)
-        {
-            action(source[i], i);
         }
     }
 }

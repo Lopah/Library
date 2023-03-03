@@ -35,6 +35,6 @@ public class TimeSpanConverter : JsonConverter<TimeSpan>
             throw new ArgumentNullException(nameof(writer));
         }
 
-        writer.WriteStringValue(value.ToString(@"hh\:mm", CultureInfo.InvariantCulture));
+        writer.WriteStringValue(value.ToString(@"hh\:mm\:ss", CultureInfo.InvariantCulture));
     }
 }
