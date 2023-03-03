@@ -12,7 +12,7 @@ public class ValidationUnitTests
     private class Data
     {
         [EmailAddressValidation]
-        public string Email { get; set; }
+        public string Email { get; set; } = string.Empty;
     }
     [Fact]
     public void Test()

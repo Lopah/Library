@@ -143,6 +143,7 @@ public partial class Build : NukeBuild, IChangeLog
                     .SetAssemblyVersion(GitVersion.AssemblySemVer)
                     .SetFileVersion(GitVersion.AssemblySemFileVer)
                     .SetInformationalVersion(GitVersion.InformationalVersion)
+                    .SetVersion(GitVersion.MajorMinorPatch)
                     .EnableNoRestore());
             });
         });
@@ -153,7 +154,7 @@ public partial class Build : NukeBuild, IChangeLog
         .DependsOn(Compile)
         .Executes(() =>
         {
-            TestsDirectory.GlobFiles("*.csproj").ForEach(testProject =>
+            TestsDirectory.GlobFiles("**/*.csproj").ForEach(testProject =>
             {
                 DotNetTest(s => s
                     .SetProjectFile(testProject)
