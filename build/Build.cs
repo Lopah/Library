@@ -34,7 +34,8 @@ namespace Nuke.Build.Custom;
     FetchDepth = 0)]
 [GitHubActions("unit-tests", GitHubActionsImage.UbuntuLatest,
     OnPushBranches = new[] { "feature/*", "hotfix/*", "chore/*"},
-    InvokedTargets = new []{ nameof(UnitTests)})]
+    InvokedTargets = new []{ nameof(UnitTests)},
+    FetchDepth = 0)]
 public partial class Build : NukeBuild, IChangeLog
 {
     static Environment _environment = Environment.Undefined;
