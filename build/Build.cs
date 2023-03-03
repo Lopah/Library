@@ -32,6 +32,10 @@ namespace Nuke.Build.Custom;
     PublishArtifacts = true,
     Submodules = GitHubActionsSubmodules.Recursive,
     FetchDepth = 0)]
+[GitHubActions("unit-tests", GitHubActionsImage.UbuntuLatest,
+    OnPushBranches = new[] { "feature/*", "hotfix/*", "chore/*"},
+    InvokedTargets = new []{ nameof(UnitTests)},
+    FetchDepth = 0)]
 public partial class Build : NukeBuild, IChangeLog
 {
     static Environment _environment = Environment.Undefined;
@@ -139,6 +143,7 @@ public partial class Build : NukeBuild, IChangeLog
                     .SetAssemblyVersion(GitVersion.AssemblySemVer)
                     .SetFileVersion(GitVersion.AssemblySemFileVer)
                     .SetInformationalVersion(GitVersion.InformationalVersion)
+                    .SetVersion(GitVersion.MajorMinorPatch)
                     .EnableNoRestore());
             });
         });
@@ -149,7 +154,7 @@ public partial class Build : NukeBuild, IChangeLog
         .DependsOn(Compile)
         .Executes(() =>
         {
-            TestsDirectory.GlobFiles("*.csproj").ForEach(testProject =>
+            TestsDirectory.GlobFiles("**/*.csproj").ForEach(testProject =>
             {
                 DotNetTest(s => s
                     .SetProjectFile(testProject)
@@ -162,8 +167,8 @@ public partial class Build : NukeBuild, IChangeLog
     /// </summary>
     Target Pack => _ => _
         .Description("Packs the shared library in this project to be then shared via NuGet")
-        .DependsOn(Compile, Changelog)
-        .DependsOn(UnitTests)
+        .DependsOn(Compile, Changelog, UnitTests)
+        .After(UnitTests)
         .Executes(() =>
         {
             Solution.Projects.Where(e => e.IsPackable()).ForEach(e =>

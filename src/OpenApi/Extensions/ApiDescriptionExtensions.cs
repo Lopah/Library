@@ -13,9 +13,7 @@ public static class ApiDescriptionExtensions
         var operation = apiDescription.ActionDescriptor.EndpointMetadata
             .FirstOrDefault(x => x is SwaggerApiOperationAttribute);
 
-        var swaggerOperation = operation as SwaggerApiOperationAttribute;
-
-        if (swaggerOperation is null)
+        if (operation is not SwaggerApiOperationAttribute swaggerOperation)
         {
             return apiDescription.GroupName ?? string.Empty;
         }

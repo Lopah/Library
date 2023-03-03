@@ -7,4 +7,5 @@ namespace Utilities.Policies;
 public static class JsonNamingPolicies
 {
     public static JsonNamingPolicy UpperSnakeCase { get; } = new JsonUpperSnakeCaseNamingPolicy();
+    public static JsonNamingPolicy SnakeCase { get; } = new JsonSnakeCaseNamingPolicy();
 }

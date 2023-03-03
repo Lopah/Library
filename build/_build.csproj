@@ -18,6 +18,9 @@
         <Compile Remove="artifacts\**" />
         <EmbeddedResource Remove="artifacts\**" />
         <None Remove="artifacts\**" />
+        <None Remove="..\.nuke\temp\build.log" />
+        <None Remove="..\.nuke\temp\build.2023-01-13_21-57-19.log" />
+        <None Remove="..\.nuke\temp\build.2023-01-13_22-08-19.log" />
     </ItemGroup>
 
     <ItemGroup>
@@ -44,6 +47,10 @@
         <NukeMetadata Include="**/*.json" Exclude="bin/**;obj/**" />
         <None Remove="*.csproj.DotSettings;*.ref.*.txt" />
         <NukeMetadata Remove="artifacts\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="logs" />
     </ItemGroup>
 
 </Project>
