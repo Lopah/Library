@@ -30,7 +30,7 @@ public class TimeSpanConverterTests
         data.Should().NotBeNull();
 
         data!.Something.Hours.Should().Be(10);
-        data!.Something.Minutes.Should().Be(10);
-        data!.Something.Seconds.Should().Be(10);
+        data.Something.Minutes.Should().Be(10);
+        data.Something.Seconds.Should().Be(10);
     }
 }

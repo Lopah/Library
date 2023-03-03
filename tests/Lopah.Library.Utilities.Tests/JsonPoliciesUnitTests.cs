@@ -15,6 +15,7 @@ public class JsonPolicies
     }
     private class Data
     {
+        // ReSharper disable once UnusedAutoPropertyAccessor.Local
         public Test Something { get; set; }
         
     }

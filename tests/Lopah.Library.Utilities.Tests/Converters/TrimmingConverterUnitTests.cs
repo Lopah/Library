@@ -1,5 +1,4 @@
-﻿using System;
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 using FluentAssertions;
 using Utilities.Converters;
@@ -33,6 +32,6 @@ public class TrimmingConverterTests
         var output = "test!!!!";
 
         data!.Something.Should().Be(output);
-        data!.Something.Length.Should().Be(output.Length);
+        data.Something.Length.Should().Be(output.Length);
     }
 }

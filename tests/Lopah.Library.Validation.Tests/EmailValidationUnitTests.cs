@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using FluentAssertions;
 using Validation;
 using Xunit;
@@ -12,6 +11,7 @@ public class ValidationUnitTests
     private class Data
     {
         [EmailAddressValidation]
+        // ReSharper disable once UnusedAutoPropertyAccessor.Local
         public string Email { get; set; } = string.Empty;
     }
     [Fact]

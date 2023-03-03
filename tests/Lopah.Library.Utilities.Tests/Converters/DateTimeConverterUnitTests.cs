@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Buffers;
 using System.IO;
 using System.Text;
 using System.Text.Json;
@@ -50,7 +49,7 @@ public class DateConverterTests
 
         output!.Date.HasValue.Should().BeTrue();
 
-        var date = output!.Date!.Value;
+        var date = output.Date!.Value;
 
         date.Year.Should().Be(1998);
         date.Month.Should().Be(10);
@@ -133,7 +132,7 @@ public class DateConverterTests
 
         output!.Date.HasValue.Should().BeTrue();
 
-        var date = output!.Date!.Value;
+        var date = output.Date!.Value;
 
         date.Year.Should().Be(2009);
         date.Month.Should().Be(6);
@@ -176,7 +175,7 @@ public class DateConverterTests
 
         output!.Date.HasValue.Should().BeTrue();
 
-        var date = output!.Date!.Value;
+        var date = output.Date!.Value;
 
         date.Year.Should().Be(2009);
         date.Month.Should().Be(6);

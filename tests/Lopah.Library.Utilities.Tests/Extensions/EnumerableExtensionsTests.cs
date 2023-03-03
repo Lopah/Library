@@ -74,6 +74,7 @@ public class EnumerableExtensionsTests
     [Fact]
     public void MaxOrDefault_WithEmptyListAndSelector_ReturnsDefault()
     {
+        // ReSharper disable once CollectionNeverUpdated.Local
         var emptyList = new List<int>();
 
         var result = emptyList.MaxOrDefault(e => e);
@@ -84,6 +85,7 @@ public class EnumerableExtensionsTests
     [Fact]
     public void MaxOrDefault_WithEmptyList_ReturnsDefault()
     {
+        // ReSharper disable once CollectionNeverUpdated.Local
         var emptyList = new List<int>();
 
         var result = emptyList.MaxOrDefault();
@@ -382,7 +384,7 @@ public class EnumerableExtensionsTests
                 "here"
             });
 
-        var func = () => list!.ForEach(null!);
+        var func = () => list.ForEach(null!);
 
         func.Should().ThrowExactly<ArgumentNullException>()
             .WithParameterName("action");

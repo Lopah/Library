@@ -47,6 +47,7 @@
         <NukeMetadata Include="**/*.json" Exclude="bin/**;obj/**" />
         <None Remove="*.csproj.DotSettings;*.ref.*.txt" />
         <NukeMetadata Remove="artifacts\**" />
+        <AssemblyAttribute Include="System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage" />
     </ItemGroup>
 
     <ItemGroup>
