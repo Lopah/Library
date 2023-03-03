@@ -74,6 +74,7 @@ public class EnumerableExtensionsTests
     [Fact]
     public void MaxOrDefault_WithEmptyListAndSelector_ReturnsDefault()
     {
+        // ReSharper disable once CollectionNeverUpdated.Local
         var emptyList = new List<int>();
 
         var result = emptyList.MaxOrDefault(e => e);
@@ -84,6 +85,7 @@ public class EnumerableExtensionsTests
     [Fact]
     public void MaxOrDefault_WithEmptyList_ReturnsDefault()
     {
+        // ReSharper disable once CollectionNeverUpdated.Local
         var emptyList = new List<int>();
 
         var result = emptyList.MaxOrDefault();
@@ -94,7 +96,7 @@ public class EnumerableExtensionsTests
     [Fact]
     public void MaxOrDefault_WithListOfIntegersAndSelector_ReturnsLargest()
     {
-        var list = new List<int>()
+        var list = new List<int>
         {
             1,
             2,
@@ -111,7 +113,7 @@ public class EnumerableExtensionsTests
     [Fact]
     public void MaxOrDefault_WithListOfIntegers_ReturnsLargest()
     {
-        var list = new List<int>()
+        var list = new List<int>
         {
             1,
             2,
@@ -131,7 +133,7 @@ public class EnumerableExtensionsTests
     {
         List<int>? nullList = null;
 
-        var someList = new List<int>()
+        var someList = new List<int>
         {
             1,
             2,
@@ -148,7 +150,7 @@ public class EnumerableExtensionsTests
     {
         List<int>? nullList = null;
 
-        var someList = new List<int>()
+        var someList = new List<int>
         {
             1,
             2,
@@ -163,14 +165,14 @@ public class EnumerableExtensionsTests
     [Fact]
     public void HasEqualItems_WithOneListLarger_ReturnsFalse()
     {
-        var someList = new List<int>()
+        var someList = new List<int>
         {
             1,
             2,
             3
         };
 
-        var someOtherList = new List<int>()
+        var someOtherList = new List<int>
         {
             1,
             2,
@@ -186,18 +188,18 @@ public class EnumerableExtensionsTests
     [Fact]
     public void HasEqualItems_WithNonEqualLastElement_ReturnsFalse()
     {
-        var someList = new List<int>()
+        var someList = new List<int>
         {
             1,
             2,
             3
         };
 
-        var someOtherList = new List<int>()
+        var someOtherList = new List<int>
         {
             1,
             2,
-            5,
+            5
         };
 
         var result = someList.HasEqualItems(someOtherList, (first, second) => first.Equals(second));
@@ -208,18 +210,18 @@ public class EnumerableExtensionsTests
     [Fact]
     public void HasEqualItems_WithEqualLists_ReturnsTrue()
     {
-        var someList = new List<int>()
+        var someList = new List<int>
         {
             1,
             2,
             3
         };
 
-        var someOtherList = new List<int>()
+        var someOtherList = new List<int>
         {
             1,
             2,
-            3,
+            3
         };
 
         var result = someList.HasEqualItems(someOtherList, (first, second) => first.Equals(second));
@@ -309,7 +311,7 @@ public class EnumerableExtensionsTests
     [Fact]
     public async Task AddIfAnyAsync_WithProperCondition_AddsCorrectly()
     {
-        var initialList = new List<string>()
+        var initialList = new List<string>
         {
             "easy",
             "peasy"
@@ -329,11 +331,11 @@ public class EnumerableExtensionsTests
             (enumerable, token) => { return Task.FromResult(enumerable.Single(e => e.Contains("something"))).WithCancellation(token); },
             cancellationToken);
 
-        var expectedCollection = new List<string>()
+        var expectedCollection = new List<string>
         {
             "easy",
             "peasy",
-            "something",
+            "something"
         };
         initialList.Count.Should().Be(3);
         initialList.Should().BeEquivalentTo(expectedCollection);
@@ -382,7 +384,7 @@ public class EnumerableExtensionsTests
                 "here"
             });
 
-        var func = () => list!.ForEach(null!);
+        var func = () => list.ForEach(null!);
 
         func.Should().ThrowExactly<ArgumentNullException>()
             .WithParameterName("action");
@@ -398,7 +400,7 @@ public class EnumerableExtensionsTests
             1, 2, 3
         };
 
-        var toAdd = new List<int>()
+        var toAdd = new List<int>
         {
             4, 5, 6
         };
@@ -416,11 +418,10 @@ public class EnumerableExtensionsTests
 
         list.Should().BeEquivalentTo(output);
     }
-    
+
     [Fact]
     public async Task AddRangeIfAny_WithAddListOfLists_AddsFirstOne()
     {
-        
         var tokenSource = new CancellationTokenSource();
         var cancellationToken = tokenSource.Token;
         var list = new List<int>
@@ -428,7 +429,7 @@ public class EnumerableExtensionsTests
             1, 2, 3
         };
 
-        var toAdd = new List<List<int>>()
+        var toAdd = new List<List<int>>
         {
             new List<int>
             {
@@ -439,7 +440,7 @@ public class EnumerableExtensionsTests
                 1, 1, 1, 1
             }
         };
-        
+
         await list.AddRangeIfAnyAsync(
             toAdd,
             (something, _) => { return Task.FromResult(something.First(e => e.Count == 3).AsEnumerable()); },

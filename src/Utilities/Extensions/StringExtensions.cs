@@ -36,16 +36,11 @@ public static class StringExtensions
             .Normalize(NormalizationForm.FormC);
     }
 
-    public static string ReplaceOtherThan(this string text, HashSet<char> allowedChars, char charToReplace)
+    public static string ReplaceOtherThan(this string text, Span<char> allowedChars, char charToReplace)
     {
         if (text is null)
         {
             throw new ArgumentNullException(nameof(text));
-        }
-
-        if (allowedChars is null)
-        {
-            throw new ArgumentNullException(nameof(allowedChars));
         }
 
         var chars = text.ToCharArray();
@@ -61,16 +56,6 @@ public static class StringExtensions
         }
 
         return new(chars);
-    }
-
-    public static string TakeLastNumberOfCharacters(this string text, int numberOfCharacters)
-    {
-        if (text is null)
-        {
-            throw new ArgumentNullException(nameof(text));
-        }
-
-        return text[Math.Max(0, text.Length - numberOfCharacters)..];
     }
 
     public static IReadOnlyList<string> SplitToChunks(this string text, int chunkSize)
@@ -99,6 +84,14 @@ public static class StringExtensions
             .ToList();
     }
 
+    /// <summary>
+    ///     Will reduce string if it exceeds maxlength and appends three dot chars
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="maxLength"></param>
+    /// <returns>original string if its shorter than maxlength</returns>
+    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
     public static string ReduceLength(this string text, int maxLength)
     {
         if (text is null)
@@ -116,6 +109,6 @@ public static class StringExtensions
             return text;
         }
 
-        return text.Substring(0, maxLength - 3) + "...";
+        return text[..(maxLength - 3)] + "...";
     }
 }

@@ -37,6 +37,8 @@ public static class JsonExtensions
         options.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
         options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
         options.Converters.Add(new DateTimeConverter());
+        options.Converters.Add(new DateOnlyConverter());
+        options.Converters.Add(new DateConverter());
         options.Converters.Add(new TrimmingConverter());
         options.Converters.Add(new TimeSpanConverter());
         options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicies.UpperSnakeCase));

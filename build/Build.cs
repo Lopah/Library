@@ -33,8 +33,8 @@ namespace Nuke.Build.Custom;
     Submodules = GitHubActionsSubmodules.Recursive,
     FetchDepth = 0)]
 [GitHubActions("unit-tests", GitHubActionsImage.UbuntuLatest,
-    OnPushBranches = new[] { "feature/*", "hotfix/*", "chore/*"},
-    InvokedTargets = new []{ nameof(UnitTests)},
+    OnPushBranches = new[] { "feature/*", "hotfix/*", "chore/*" },
+    InvokedTargets = new[] { nameof(UnitTests) },
     FetchDepth = 0)]
 public partial class Build : NukeBuild, IChangeLog
 {
@@ -82,11 +82,11 @@ public partial class Build : NukeBuild, IChangeLog
                 _environment = Environment.Undefined;
                 return;
             }
-            
+
             _environment = value;
         }
     }
-    
+
     [Parameter]
     [Secret]
     string NugetApiKey

@@ -10,7 +10,7 @@ namespace Utilities.Converters;
 public class DateTimeConverter : JsonConverter<DateTimeOffset?>
 {
     private static readonly string[] _iso8601Patterns =
-        { "yyyy-MM-ddTHH:mm:ss.fffffffK", "yyyy-MM-ddTHH:mm:ssK", "yyyy-MM-ddTHH:mm:ss.fffK"};
+        { "yyyy-MM-ddTHH:mm:ss.fffffffK", "yyyy-MM-ddTHH:mm:ssK", "yyyy-MM-ddTHH:mm:ss.fffK" };
 
     /// <summary>Reads and converts the JSON to type <see cref="DateTimeOffset" />.</summary>
     /// <param name="reader">The reader.</param>

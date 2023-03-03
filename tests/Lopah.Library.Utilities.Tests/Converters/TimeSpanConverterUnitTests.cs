@@ -9,12 +9,6 @@ namespace Lopah.Library.Utilities.Tests.Converters;
 
 public class TimeSpanConverterTests
 {
-    private class Data
-    {
-        [JsonConverter(typeof(TimeSpanConverter))]
-        public TimeSpan Something { get; set; }
-        
-    }
     [Fact]
     public void LowerStringConverter_GivenUpperCaseString_LowersIt()
     {
@@ -30,7 +24,13 @@ public class TimeSpanConverterTests
         data.Should().NotBeNull();
 
         data!.Something.Hours.Should().Be(10);
-        data!.Something.Minutes.Should().Be(10);
-        data!.Something.Seconds.Should().Be(10);
+        data.Something.Minutes.Should().Be(10);
+        data.Something.Seconds.Should().Be(10);
+    }
+
+    private class Data
+    {
+        [JsonConverter(typeof(TimeSpanConverter))]
+        public TimeSpan Something { get; set; }
     }
 }

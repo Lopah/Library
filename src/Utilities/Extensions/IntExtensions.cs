@@ -6,7 +6,7 @@ namespace Utilities.Extensions;
 [PublicAPI]
 public static class IntExtensions
 {
-    public static int GetNumberOfDigits(int n)
+    public static int GetNumberOfDigits(this int n)
     {
         if (n < 0)
         {
