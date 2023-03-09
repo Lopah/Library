@@ -10,5 +10,6 @@ public class Branch
     public const string DevelopBranch = "develop";
     public const string ReleaseBranchPrefix = "release";
     public const string HotfixBranch = "hotfix";
+    public const string DependabotBranch = "dependabot/*";
     public static bool IsMainOrMaster(string input) => input.Contains(MasterBranch) || input.Contains(MainBranch);
 }

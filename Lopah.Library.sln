@@ -16,6 +16,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lopah.Library.Utilities.Tes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lopah.Library.Validation.Tests", "tests\Lopah.Library.Validation.Tests\Lopah.Library.Validation.Tests.csproj", "{9034D3C2-B17C-4688-9390-82928E94B105}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lopah.Library.Api.Tests", "tests\Lopah.Library.Api.Tests\Lopah.Library.Api.Tests.csproj", "{01960FF8-5862-42E6-BB40-38BBC4018D11}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,9 +50,14 @@ Global
 		{9034D3C2-B17C-4688-9390-82928E94B105}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9034D3C2-B17C-4688-9390-82928E94B105}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9034D3C2-B17C-4688-9390-82928E94B105}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01960FF8-5862-42E6-BB40-38BBC4018D11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01960FF8-5862-42E6-BB40-38BBC4018D11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01960FF8-5862-42E6-BB40-38BBC4018D11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01960FF8-5862-42E6-BB40-38BBC4018D11}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{4C107DE4-B055-4753-9282-5384C4BAB709} = {A5E7604D-0B63-4B85-A04B-9F5289DB0671}
 		{9034D3C2-B17C-4688-9390-82928E94B105} = {A5E7604D-0B63-4B85-A04B-9F5289DB0671}
+		{01960FF8-5862-42E6-BB40-38BBC4018D11} = {A5E7604D-0B63-4B85-A04B-9F5289DB0671}
 	EndGlobalSection
 EndGlobal

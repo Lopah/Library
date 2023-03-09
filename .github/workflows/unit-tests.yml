@@ -17,26 +17,27 @@
 name: unit-tests
 
 on:
-    push:
-        branches:
-            - 'feature/*'
-            - 'hotfix/*'
-            - 'chore/*'
+  push:
+    branches:
+      - 'feature/*'
+      - 'hotfix/*'
+      - 'chore/*'
+      - 'dependabot/*'
 
 jobs:
-    ubuntu-latest:
-        name: ubuntu-latest
-        runs-on: ubuntu-latest
-        steps:
-            -   uses: actions/checkout@v3
-                with:
-                    fetch-depth: 0
-            -   name: Cache .nuke/temp, ~/.nuget/packages
-                uses: actions/cache@v3
-                with:
-                    path: |
-                        .nuke/temp
-                        ~/.nuget/packages
-                    key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj') }}
-            -   name: Run './build.cmd UnitTests'
-                run: ./build.cmd UnitTests
+  ubuntu-latest:
+    name: ubuntu-latest
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Cache .nuke/temp, ~/.nuget/packages
+        uses: actions/cache@v3
+        with:
+          path: |
+            .nuke/temp
+            ~/.nuget/packages
+          key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj') }}
+      - name: Run './build.cmd UnitTests'
+        run: ./build.cmd UnitTests
