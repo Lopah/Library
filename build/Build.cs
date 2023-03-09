@@ -33,7 +33,7 @@ namespace Nuke.Build.Custom;
     Submodules = GitHubActionsSubmodules.Recursive,
     FetchDepth = 0)]
 [GitHubActions("unit-tests", GitHubActionsImage.UbuntuLatest,
-    OnPushBranches = new[] { "feature/*", "hotfix/*", "chore/*" },
+    OnPushBranches = new[] { "feature/*", "hotfix/*", "chore/*", DependabotBranch },
     InvokedTargets = new[] { nameof(UnitTests) },
     FetchDepth = 0)]
 public partial class Build : NukeBuild, IChangeLog
