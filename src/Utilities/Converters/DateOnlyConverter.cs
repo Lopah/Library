@@ -21,8 +21,8 @@ public class DateOnlyConverter : JsonConverter<DateOnly>
         return DateOnly.ParseExact(
             reader.GetString() ?? string.Empty,
             DatePattern,
-            CultureInfo.InvariantCulture,
-            DateTimeStyles.AssumeUniversal);
+            CultureInfo.InvariantCulture
+            );
     }
 
     /// <summary>Writes a specified value as JSON.</summary>
