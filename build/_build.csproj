@@ -15,43 +15,42 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Remove="artifacts\**"/>
-        <EmbeddedResource Remove="artifacts\**"/>
-        <None Remove="artifacts\**"/>
-        <None Remove="..\.nuke\temp\build.log"/>
-        <None Remove="..\.nuke\temp\build.2023-01-13_21-57-19.log"/>
-        <None Remove="..\.nuke\temp\build.2023-01-13_22-08-19.log"/>
+        <Compile Remove="artifacts\**" />
+        <EmbeddedResource Remove="artifacts\**" />
+        <None Remove="artifacts\**" />
+        <None Remove="..\.nuke\temp\build.log" />
+        <None Remove="..\.nuke\temp\build.2023-01-13_21-57-19.log" />
+        <None Remove="..\.nuke\temp\build.2023-01-13_22-08-19.log" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Dangl.Nuke.CoberturaConverter" Version="2.0.0"/>
-        <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0"/>
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
         <PackageReference Include="GitVersion.CommandLine" Version="5.12.0">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.4"/>
-        <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="7.0.0"/>
-        <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="7.0.0"/>
-        <PackageReference Include="Nuke.CodeGeneration" Version="6.3.0"/>
-        <PackageReference Include="Nuke.Common" Version="6.3.0"/>
-        <PackageReference Include="Nuke.GitHub" Version="3.0.0"/>
+        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.4" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="7.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="7.0.0" />
+        <PackageReference Include="Nuke.CodeGeneration" Version="6.3.0" />
+        <PackageReference Include="Nuke.Common" Version="7.0.0" />
+        <PackageReference Include="Nuke.GitHub" Version="5.0.0" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageDownload Include="GitVersion.Tool" Version="[5.11.1]"/>
-        <PackageDownload Include="JetBrains.ReSharper.GlobalTools" Version="[2020.3.2]"/>
+        <PackageDownload Include="GitVersion.Tool" Version="[5.11.1]" />
+        <PackageDownload Include="JetBrains.ReSharper.GlobalTools" Version="[2020.3.2]" />
     </ItemGroup>
 
     <ItemGroup>
-        <NukeMetadata Include="**/*.json" Exclude="bin/**;obj/**"/>
-        <None Remove="*.csproj.DotSettings;*.ref.*.txt"/>
-        <NukeMetadata Remove="artifacts\**"/>
-        <AssemblyAttribute Include="System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage"/>
+        <NukeMetadata Include="**/*.json" Exclude="bin/**;obj/**" />
+        <None Remove="*.csproj.DotSettings;*.ref.*.txt" />
+        <NukeMetadata Remove="artifacts\**" />
+        <AssemblyAttribute Include="System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage" />
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="logs"/>
+        <Folder Include="logs" />
     </ItemGroup>
 
 </Project>

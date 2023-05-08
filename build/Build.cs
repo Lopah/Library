@@ -15,7 +15,6 @@ using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Utilities.Collections;
 using Serilog;
 using static Nuke.Build.Custom.Paths;
-using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using static Nuke.Build.Custom.GitHub.Branch;
 
@@ -44,7 +43,7 @@ public partial class Build : NukeBuild, IChangeLog
     readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
 
     [GitRepository]
-    readonly GitRepository GitRepository;
+    readonly GitRepository Repository;
 
     [GitVersion(NoFetch = true)]
     [Required]
@@ -107,9 +106,9 @@ public partial class Build : NukeBuild, IChangeLog
         .Before(Restore)
         .Executes(() =>
         {
-            SourceDirectory.GlobDirectories("**/bin", "**/obj").ForEach(DeleteDirectory);
-            TestsDirectory.GlobDirectories("**/bin", "**/obj").ForEach(DeleteDirectory);
-            EnsureCleanDirectory(OutputDirectory);
+            SourceDirectory.GlobDirectories("**/bin", "**/obj").DeleteDirectories();
+            TestsDirectory.GlobDirectories("**/bin", "**/obj").DeleteDirectories();
+            OutputDirectory.CreateOrCleanDirectory();
         });
 
     Target Restore => _ => _

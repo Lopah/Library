@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Nuke.Build.Custom.Components;
-using Nuke.CoberturaConverter;
 using Nuke.Common;
 using Nuke.Common.Git;
 using Nuke.Common.Tooling;
@@ -15,7 +14,6 @@ using Nuke.Common.Tools.ReportGenerator;
 using Nuke.Common.Utilities.Collections;
 using Nuke.GitHub;
 using Serilog;
-using static Nuke.CoberturaConverter.CoberturaConverterTasks;
 using static Nuke.CodeGeneration.CodeGenerator;
 using static Nuke.Common.ChangeLog.ChangelogTasks;
 using static Nuke.Common.Tools.DotCover.DotCoverTasks;
@@ -23,11 +21,11 @@ using static Nuke.Common.Tools.ReportGenerator.ReportGeneratorTasks;
 using static Nuke.Common.Tools.Git.GitTasks;
 using static Nuke.GitHub.GitHubTasks;
 using static Nuke.Common.Tools.GitVersion.GitVersionTasks;
-using static Nuke.Common.IO.PathConstruction;
 using static Nuke.Common.Utilities.StringExtensions;
 using static Nuke.Build.Custom.Paths;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using static Nuke.Build.Custom.GitHub.Branch;
+using static Nuke.Common.IO.Globbing;
 
 
 namespace Nuke.Build.Custom;
@@ -41,11 +39,11 @@ public partial class Build
 
     Target Changelog => _ => _
         .Unlisted()
-        .OnlyWhenStatic(() => GitRepository.IsOnReleaseBranch() || GitRepository.IsOnHotfixBranch())
+        .OnlyWhenStatic(() => Repository.IsOnReleaseBranch() || Repository.IsOnHotfixBranch())
         .Executes(() =>
         {
             var changeLogFile = From<IChangeLog>().ChangeLogFile;
-            FinalizeChangelog(changeLogFile, MajorMinorPatchVersion, GitRepository);
+            FinalizeChangelog(changeLogFile, MajorMinorPatchVersion, Repository);
             Log.Information("Please review CHANGELOG.md and press any key to continue...");
             Console.ReadKey();
 
@@ -57,10 +55,10 @@ public partial class Build
     [PublicAPI]
     Target Release => _ => _
         .DependsOn(Changelog)
-        .Requires(() => !GitRepository.IsOnReleaseBranch() || GitHasCleanWorkingCopy())
+        .Requires(() => !Repository.IsOnReleaseBranch() || GitHasCleanWorkingCopy())
         .Executes(() =>
         {
-            if (!GitRepository.IsOnReleaseBranch())
+            if (!Repository.IsOnReleaseBranch())
             {
                 Checkout($"{ReleaseBranchPrefix}/{MajorMinorPatchVersion}", DevelopBranch);
                 return;
@@ -72,7 +70,7 @@ public partial class Build
     [PublicAPI]
     Target Hotfix => _ => _
         .DependsOn(Changelog)
-        .Requires(() => !GitRepository.IsOnHotfixBranch() || GitHasCleanWorkingCopy())
+        .Requires(() => !Repository.IsOnHotfixBranch() || GitHasCleanWorkingCopy())
         .Executes(() =>
         {
             var masterVersion = GitVersion(s => s
@@ -82,7 +80,7 @@ public partial class Build
                 .EnableNoFetch()
                 .DisableProcessLogOutput()).Result;
 
-            if (!GitRepository.IsOnHotfixBranch())
+            if (!Repository.IsOnHotfixBranch())
             {
                 Checkout($"{HotfixBranch}/{masterVersion.Major}.{masterVersion.Minor}.{masterVersion.Patch + 1}",
                     MasterBranch);
@@ -95,11 +93,11 @@ public partial class Build
     [PublicAPI]
     Target PublishGitHubRelease => _ => _
         .DependsOn(Pack)
-        .OnlyWhenDynamic(() => GitRepository.IsOnReleaseBranch() || GitRepository.IsOnMainOrMasterBranch() ||
-                               GitRepository.IsOnHotfixBranch() || true)
+        .OnlyWhenDynamic(() => Repository.IsOnReleaseBranch() || Repository.IsOnMainOrMasterBranch() ||
+                               Repository.IsOnHotfixBranch())
         .Executes<Task>(async () =>
         {
-            Log.Information("Started creating release.");
+            Log.Information("Started creating release");
             var releaseTag = $"v{GitVersion.MajorMinorPatch}";
 
             var changeLogSectionEntries = ExtractChangelogSectionNotes(From<IChangeLog>().ChangeLogFile);
@@ -108,7 +106,7 @@ public partial class Build
 
             var completeChangeLog = $"## {releaseTag}" + System.Environment.NewLine + latestChangeLog;
 
-            var (gitHubOwner, repositoryName) = GetGitHubRepositoryInfo(GitRepository);
+            var (gitHubOwner, repositoryName) = GetGitHubRepositoryInfo(Repository);
             var nugetPackages = OutputDirectory.GlobFiles("*.nupkg").NotNull("Could not find nuget packages.")
                 .Select(x => x.ToString()).ToArray();
 
@@ -200,12 +198,6 @@ public partial class Build
             ReportGenerator(c => c
                 .SetReports(OutputDirectory / "coverage.xml")
                 .SetTargetDirectory(OutputDirectory / "CoverageReport"));
-
-
-            // Cobertura format that looks good in Jenkins dashboard
-            await DotCoverToCobertura(s => s
-                .SetInputFile(OutputDirectory / "coverage.xml")
-                .SetOutputFile(OutputDirectory / "cobertura_coverage.xml"));
         });
 
     void Checkout(string branch, string start)
@@ -214,27 +206,27 @@ public partial class Build
 
         if (!hasCleanWorkingCopy && AutoStash)
         {
-            Git("stash");
+            Git($"stash");
         }
 
         Git($"checkout -b {branch} {start}");
 
         if (!hasCleanWorkingCopy && AutoStash)
         {
-            Git("stash apply");
+            Git($"stash apply");
         }
     }
 
     void FinishReleaseOrHotfix()
     {
         Git($"checkout {MasterBranch}");
-        Git($"merge --no-ff --no-edit {GitRepository.Branch}");
+        Git($"merge --no-ff --no-edit {Repository.Branch}");
         Git($"tag {MajorMinorPatchVersion}");
 
         Git($"checkout {DevelopBranch}");
-        Git($"merge --no-ff --no-edit {GitRepository.Branch}");
+        Git($"merge --no-ff --no-edit {Repository.Branch}");
 
-        Git($"branch -D {GitRepository.Branch}");
+        Git($"branch -D {Repository.Branch}");
 
         Git($"push origin {MasterBranch} {DevelopBranch} {MajorMinorPatchVersion}");
     }
