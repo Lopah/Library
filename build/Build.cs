@@ -32,7 +32,6 @@ namespace Nuke.Build.Custom;
     Submodules = GitHubActionsSubmodules.Recursive,
     FetchDepth = 0)]
 [GitHubActions("unit-tests", GitHubActionsImage.UbuntuLatest,
-    OnPullRequestBranches = new[] { MasterBranch, MainBranch, ReleaseBranchPrefix + "/*" },
     OnPushBranches = new[] { "feature/*", "hotfix/*", "chore/*", DependabotBranch },
     InvokedTargets = new[] { nameof(UnitTests) },
     FetchDepth = 0)]
