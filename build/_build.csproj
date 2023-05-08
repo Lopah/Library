@@ -34,7 +34,7 @@
         <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="7.0.0"/>
         <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="7.0.0"/>
         <PackageReference Include="Nuke.CodeGeneration" Version="6.3.0"/>
-        <PackageReference Include="Nuke.Common" Version="6.3.0"/>
+        <PackageReference Include="Nuke.Common" Version="7.0.0"/>
         <PackageReference Include="Nuke.GitHub" Version="3.0.0"/>
     </ItemGroup>
 
