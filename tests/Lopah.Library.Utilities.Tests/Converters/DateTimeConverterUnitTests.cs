@@ -91,7 +91,8 @@ public class DateConverterTests
                         {
                             AllowTrailingCommas = true,
                             ReadCommentHandling = JsonCommentHandling.Disallow,
-                            MaxDepth = 0
+                            MaxDepth = 0,
+                            Converters = { new DateOnlyConverter() }
                         });
                 });
 

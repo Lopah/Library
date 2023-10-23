@@ -13,7 +13,7 @@ no-bump-message: '\+semver:\s?(none|skip)'
 branches:
     master:
         increment: Patch
-        regex: (origin/)?master
+        regex: (origin/)?main
         is-mainline: true
     develop:
         increment: Minor

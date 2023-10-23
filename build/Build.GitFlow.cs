@@ -155,7 +155,7 @@ public partial class Build
     [PublicAPI]
     Target Coverage => _ => _
         .DependsOn(Compile)
-        .Executes(async () =>
+        .Executes(() =>
         {
             var testProjects = TestsDirectory.GlobFiles("*est*.csproj").ToList();
             if (testProjects.Count == 0)
@@ -198,6 +198,7 @@ public partial class Build
             ReportGenerator(c => c
                 .SetReports(OutputDirectory / "coverage.xml")
                 .SetTargetDirectory(OutputDirectory / "CoverageReport"));
+            return Task.CompletedTask;
         });
 
     void Checkout(string branch, string start)
