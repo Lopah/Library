@@ -4,13 +4,13 @@ updates:
         directory: '/'
         schedule:
             interval: 'weekly'
-        assignees:
-            - "Lopah"
+        reviewers:
+            - 'Lopah'
 
     -   package-ecosystem: 'nuget'
         directory: '/'
         open-pull-requests-limit: 20
         schedule:
             interval: 'weekly'
-        assignees:
-            - "Lopah"
+        reviewers:
+            - 'Lopah'
