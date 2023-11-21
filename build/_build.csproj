@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFramework>net7.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <RootNamespace>Nuke.Build.Custom</RootNamespace>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <NoWarn>CS0649;CS0169</NoWarn>
@@ -12,15 +12,13 @@
         <NukeTelemetryVersion>1</NukeTelemetryVersion>
         <NUKE_TELEMETRY_OPTOUT>1</NUKE_TELEMETRY_OPTOUT>
         <UserSecretsId>49c89975-e514-43aa-ba68-6c4c1ba5b837</UserSecretsId>
+        <EnableUnsafeBinaryFormatterSerialization>true</EnableUnsafeBinaryFormatterSerialization>
     </PropertyGroup>
 
     <ItemGroup>
         <Compile Remove="artifacts\**" />
         <EmbeddedResource Remove="artifacts\**" />
         <None Remove="artifacts\**" />
-        <None Remove="..\.nuke\temp\build.log" />
-        <None Remove="..\.nuke\temp\build.2023-01-13_21-57-19.log" />
-        <None Remove="..\.nuke\temp\build.2023-01-13_22-08-19.log" />
     </ItemGroup>
 
     <ItemGroup>
@@ -30,8 +28,8 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.0" />
-        <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="7.0.0" />
-        <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="7.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="8.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="8.0.0" />
         <PackageReference Include="Nuke.CodeGeneration" Version="6.3.0" />
         <PackageReference Include="Nuke.Common" Version="7.0.6" />
         <PackageReference Include="Nuke.GitHub" Version="5.0.0" />
