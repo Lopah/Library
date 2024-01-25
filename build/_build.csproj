@@ -32,7 +32,7 @@
         <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="8.0.0" />
         <PackageReference Include="Nuke.CodeGeneration" Version="6.3.0" />
         <PackageReference Include="Nuke.Common" Version="8.0.0" />
-        <PackageReference Include="Nuke.GitHub" Version="5.0.0" />
+        <PackageReference Include="Nuke.GitHub" Version="5.0.1" />
     </ItemGroup>
 
     <ItemGroup>
