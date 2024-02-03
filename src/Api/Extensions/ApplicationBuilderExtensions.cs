@@ -14,10 +14,7 @@ public static class ApplicationBuilderExtensions
         this IApplicationBuilder app,
         CorsOptions corsOptions)
     {
-        if (app is null)
-        {
-            throw new ArgumentNullException(nameof(app));
-        }
+        ArgumentNullException.ThrowIfNull(app);
 
         var options = corsOptions;
 
@@ -36,10 +33,7 @@ public static class ApplicationBuilderExtensions
         this IApplicationBuilder app,
         IOptions<CorsOptions> corsOptions)
     {
-        if (app is null)
-        {
-            throw new ArgumentNullException(nameof(app));
-        }
+        ArgumentNullException.ThrowIfNull(app);
 
         var options = corsOptions.Value;
 
@@ -52,5 +46,14 @@ public static class ApplicationBuilderExtensions
                     .WithExposedHeaders(options.ExposedHeaders.ToArray())
                     .AllowAnyHeader();
             });
+    }
+    
+    public static void UseCorrelationMiddleware(
+        this IApplicationBuilder app,
+        Func<CorrelationOptions, CorrelationOptions>? optionsAction = null)
+    {
+        ArgumentNullException.ThrowIfNull(app);
+
+        app.UseMiddleware<CorrelationMiddleware>(optionsAction);
     }
 }
