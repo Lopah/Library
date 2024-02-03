@@ -5,10 +5,10 @@ increment: Inherit
 tag-prefix: '[vV]'
 continuous-delivery-fallback-tag: ci
 mode: Mainline
-major-version-bump-message: '\breaking:.*'
-minor-version-bump-message: '\feature:.*'
-patch-version-bump-message: '\(fix|chore):.*'
-no-bump-message: '\skip:.*'
+major-version-bump-message: 'breaking:.*'
+minor-version-bump-message: 'feature:.*'
+patch-version-bump-message: '(fix|chore):.*'
+no-bump-message: 'skip:.*'
 
 branches:
     master:
