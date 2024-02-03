@@ -50,7 +50,7 @@ public static class ApplicationBuilderExtensions
     
     public static void UseCorrelationMiddleware(
         this IApplicationBuilder app,
-        Func<CorrelationOptions, CorrelationOptions>? optionsAction = null)
+        Action<CorrelationOptions>? optionsAction = null)
     {
         ArgumentNullException.ThrowIfNull(app);
 
