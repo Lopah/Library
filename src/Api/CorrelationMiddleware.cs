@@ -14,7 +14,7 @@ public class CorrelationMiddleware
     private readonly RequestDelegate _next;
     private readonly CorrelationOptions _options;
 
-    public CorrelationMiddleware(RequestDelegate next, Func<CorrelationOptions, CorrelationOptions>? optionsAction = null)
+    public CorrelationMiddleware(RequestDelegate next, Action<CorrelationOptions>? optionsAction = null)
     {
         var options = new CorrelationOptions();
         optionsAction?.Invoke(options);
