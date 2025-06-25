@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFramework>net8.0</TargetFramework>
+        <TargetFramework>net9.0</TargetFramework>
         <RootNamespace>Nuke.Build.Custom</RootNamespace>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <NoWarn>CS0649;CS0169</NoWarn>
@@ -22,17 +22,17 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.6" />
         <PackageReference Include="GitVersion.CommandLine" Version="5.12.0">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.1" />
-        <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="8.0.0" />
-        <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="8.0.1" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.6" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="9.0.6" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.0.6" />
         <PackageReference Include="Nuke.CodeGeneration" Version="6.3.0" />
-        <PackageReference Include="Nuke.Common" Version="8.0.0" />
-        <PackageReference Include="Nuke.GitHub" Version="5.0.1" />
+        <PackageReference Include="Nuke.Common" Version="9.0.4" />
+        <PackageReference Include="Nuke.GitHub" Version="7.0.0" />
     </ItemGroup>
 
     <ItemGroup>
