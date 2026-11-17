@@ -1,0 +1,112 @@
+name: Build, test, and publish
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+
+env:
+  DOTNET_CLI_TELEMETRY_OPTOUT: '1'
+  DOTNET_NOLOGO: '1'
+  PUBLISH_RELEASE: ${{ forgejo.event_name == 'push' && (forgejo.ref == 'refs/heads/main' || forgejo.ref == 'refs/heads/master' || startsWith(forgejo.ref, 'refs/heads/release/') || startsWith(forgejo.ref, 'refs/heads/hotfix/')) }}
+
+concurrency:
+  group: library-${{ forgejo.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    container:
+      image: node:24-bookworm
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: https://code.forgejo.org/actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Install pinned .NET SDK
+        uses: https://github.com/actions/setup-dotnet@v5
+        with:
+          global-json-file: global.json
+
+      - name: Restore tools and packages
+        run: |
+          dotnet tool restore
+          dotnet restore Lopah.Library.sln
+
+      - name: Calculate version
+        id: version
+        run: |
+          mkdir -p artifacts
+          dotnet tool run dotnet-gitversion -- /nofetch /output json > artifacts/gitversion.json
+          node <<'JS'
+          const fs = require('node:fs');
+          const version = JSON.parse(fs.readFileSync('artifacts/gitversion.json', 'utf8'));
+          fs.appendFileSync(process.env.GITHUB_OUTPUT,
+            `version=${version.MajorMinorPatch}\ninformational=${version.InformationalVersion}\n`);
+          JS
+
+      - name: Build
+        run: >-
+          dotnet build Lopah.Library.sln --configuration Release --no-restore
+          -p:Version="${{ steps.version.outputs.version }}"
+          -p:InformationalVersion="${{ steps.version.outputs.informational }}"
+          -p:ContinuousIntegrationBuild=true
+
+      - name: Test with coverage
+        run: >-
+          dotnet test Lopah.Library.sln --configuration Release --no-build --no-restore
+          --logger trx --collect "XPlat Code Coverage" --results-directory artifacts/test-results
+
+      - name: Generate coverage report
+        run: >-
+          dotnet tool run reportgenerator --
+          "-reports:artifacts/test-results/**/coverage.cobertura.xml"
+          "-targetdir:artifacts/coverage"
+
+      - name: Pack
+        run: >-
+          dotnet pack Lopah.Library.sln --configuration Release --no-build --no-restore
+          --output artifacts/packages
+          -p:Version="${{ steps.version.outputs.version }}"
+          -p:PackageReleaseNotes="See CHANGELOG.md in the repository."
+
+      - name: Upload build artifacts
+        if: always()
+        uses: https://code.forgejo.org/forgejo/upload-artifact@v4
+        with:
+          name: library-${{ forgejo.run_number }}
+          path: artifacts/
+          if-no-files-found: ignore
+
+      - name: Publish packages to nuget.org
+        if: env.PUBLISH_RELEASE == 'true'
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        run: |
+          : "${NUGET_API_KEY:?Set the NUGET_API_KEY repository secret}"
+          dotnet nuget push 'artifacts/packages/*.nupkg' \
+            --source https://api.nuget.org/v3/index.json \
+            --api-key "$NUGET_API_KEY" --skip-duplicate
+
+      - name: Install release action dependencies
+        if: env.PUBLISH_RELEASE == 'true'
+        run: |
+          apt-get update
+          apt-get install --yes --no-install-recommends jq
+
+      - name: Publish Forgejo release
+        if: env.PUBLISH_RELEASE == 'true'
+        uses: https://code.forgejo.org/actions/forgejo-release@v2
+        with:
+          direction: upload
+          url: ${{ forgejo.server_url }}
+          repo: ${{ forgejo.repository }}
+          token: ${{ forgejo.token }}
+          sha: ${{ forgejo.sha }}
+          tag: v${{ steps.version.outputs.version }}
+          release-dir: artifacts/packages
+          release-notes-file: CHANGELOG.md

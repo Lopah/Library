@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Validation;
 
@@ -12,7 +12,7 @@ namespace OpenApi.Filters;
 [PublicAPI]
 public class PatternValidationAttributesFilter : ISchemaFilter
 {
-    public void Apply(OpenApiSchema schema, SchemaFilterContext context)
+    public void Apply(IOpenApiSchema schema, SchemaFilterContext context)
     {
         if (schema is null)
         {
@@ -24,14 +24,19 @@ public class PatternValidationAttributesFilter : ISchemaFilter
             throw new ArgumentNullException(nameof(context));
         }
 
+        if (schema is not OpenApiSchema openApiSchema)
+        {
+            return;
+        }
+
         if (context.ParameterInfo != null)
         {
-            ApplyApiCustomAttributes(schema, context.ParameterInfo.GetCustomAttributes());
+            ApplyApiCustomAttributes(openApiSchema, context.ParameterInfo.GetCustomAttributes());
         }
 
         if (context.MemberInfo != null)
         {
-            ApplyApiCustomAttributes(schema, context.MemberInfo.GetInlineAndMetadataAttributes());
+            ApplyApiCustomAttributes(openApiSchema, context.MemberInfo.GetInlineAndMetadataAttributes());
         }
     }
 

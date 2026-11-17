@@ -8,8 +8,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilities", "src\Utilities\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "src\Api\Api.csproj", "{B9BF4C6A-1A26-4A98-8A2B-E4DC404B9B51}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{B5041EA6-A1CF-4582-A53D-24968946711F}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{A5E7604D-0B63-4B85-A04B-9F5289DB0671}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lopah.Library.Utilities.Tests", "tests\Lopah.Library.Utilities.Tests\Lopah.Library.Utilities.Tests.csproj", "{4C107DE4-B055-4753-9282-5384C4BAB709}"
@@ -24,9 +22,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B5041EA6-A1CF-4582-A53D-24968946711F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B5041EA6-A1CF-4582-A53D-24968946711F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B5041EA6-A1CF-4582-A53D-24968946711F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BBC69FDE-933F-4F2A-A7E4-769520913408}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BBC69FDE-933F-4F2A-A7E4-769520913408}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BBC69FDE-933F-4F2A-A7E4-769520913408}.Release|Any CPU.ActiveCfg = Release|Any CPU

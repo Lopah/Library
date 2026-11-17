@@ -3,7 +3,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace OpenApi.Filters;
@@ -29,13 +29,20 @@ public class SwaggerFileOperationFilter : IOperationFilter
         foreach (var binaryResponse in binaryResponses)
         {
             var statusCode = binaryResponse.StatusCode.ToString(CultureInfo.InvariantCulture);
-            var response = operation.Responses[statusCode];
+            if (operation.Responses == null ||
+                !operation.Responses.TryGetValue(statusCode, out var apiResponse) ||
+                apiResponse is not OpenApiResponse response)
+            {
+                continue;
+            }
+
+            response.Content ??= new System.Collections.Generic.Dictionary<string, OpenApiMediaType>();
             response.Content.Clear();
             response.Content["application/octet-stream"] = new()
             {
-                Schema = new()
+                Schema = new OpenApiSchema
                 {
-                    Type = "string",
+                    Type = JsonSchemaType.String,
                     Format = "binary"
                 }
             };

@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Linq;
+using Asp.Versioning;
+using Asp.Versioning.ApiExplorer;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Microsoft.OpenApi;
 using OpenApi.Configuration;
 using OpenApi.Filters;
 using OpenApi.Options;
@@ -45,26 +48,24 @@ public static class OpenApiExtensions
 
                 options.ReportApiVersions = true;
                 options.AssumeDefaultVersionWhenUnspecified = true;
-                // TODO:
-                // options.ErrorResponses = 
-            });
+                options.ApiVersionReader = new UrlSegmentApiVersionReader();
+            })
+            .AddMvc()
+            .AddApiExplorer(
+                options =>
+                {
+                    options.GroupNameFormat = "'v'VVV";
 
-        services.AddVersionedApiExplorer(
-            options =>
-            {
-                // Adds IApiVersionDescriptionProvider service
-                // "'v'major[.minor][-status]
-                options.GroupNameFormat = "'v'VVV";
-
-                options.SubstituteApiVersionInUrl = true;
-            });
+                    options.SubstituteApiVersionInUrl = true;
+                });
 
         if (openApiConfig?.DisableSwagger == true)
         {
             return;
         }
 
-        services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+        services.AddEndpointsApiExplorer();
+        services.ConfigureOptions<ConfigureSwaggerOptions>();
         services.AddSwaggerGen(
             options =>
             {
@@ -100,22 +101,31 @@ public static class OpenApiExtensions
             return;
         }
 
-        app.UseSwagger(
-            s =>
-                s.RouteTemplate = optionValue.RouteTemplate);
+        app.UseSwagger(s =>
+        {
+            s.RouteTemplate = optionValue.RouteTemplate;
+            s.OpenApiVersion = OpenApiSpecVersion.OpenApi3_1;
+        });
 
         app.UseSwaggerUI(
             opts =>
             {
+                opts.RoutePrefix = optionValue.RoutePrefix;
+                if (optionValue.Security.AuthorizationCode != null)
+                {
+                    opts.OAuthUsePkce();
+                }
+
+                var routeDepth = optionValue.RoutePrefix.Split('/', StringSplitOptions.RemoveEmptyEntries).Length;
+                var relativePath = string.Concat(Enumerable.Repeat("../", routeDepth));
                 foreach (var description in provider.ApiVersionDescriptions)
                 {
-                    opts.RoutePrefix = optionValue.RoutePrefix;
                     var path = optionValue.RouteTemplate.Replace(
                         "{documentName}",
                         description.GroupName,
                         StringComparison.InvariantCultureIgnoreCase);
 
-                    opts.SwaggerEndpoint($"/{path}", description.GroupName.ToUpperInvariant());
+                    opts.SwaggerEndpoint($"{relativePath}{path.TrimStart('/')}", description.GroupName.ToUpperInvariant());
                 }
             });
     }

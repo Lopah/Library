@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using JetBrains.Annotations;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 
 namespace OpenApi.Options;
 
@@ -20,8 +20,8 @@ public class OpenApiOptions
 
     public IEnumerable<OpenApiServer>? Servers { get; init; }
 
-    [Required]
-    public string RoutePrefix { get; init; } = null!;
+    [Required(AllowEmptyStrings = true)]
+    public string RoutePrefix { get; init; } = "swagger";
 
     public string RouteTemplate { get; init; } = DefaultRouteTemplate;
 

@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using JetBrains.Annotations;
+using Microsoft.OpenApi;
 using Swashbuckle.AspNetCore.Filters;
 
 namespace OpenApi.Attributes;
@@ -8,7 +9,7 @@ namespace OpenApi.Attributes;
 public class SwaggerETagResponseHeaderAttribute : SwaggerResponseHeaderAttribute
 {
     public SwaggerETagResponseHeaderAttribute()
-        : base((int)HttpStatusCode.OK, "ETag", "int32", "An identifier for a specific version of a resource.")
+        : base((int)HttpStatusCode.OK, "ETag", JsonSchemaType.String, "An identifier for a specific version of a resource.")
     {
     }
 }

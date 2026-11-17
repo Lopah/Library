@@ -3,19 +3,22 @@ assembly-file-versioning-scheme: MajorMinorPatch
 assembly-informational-format: '{InformationalVersion}'
 increment: Inherit
 tag-prefix: '[vV]'
-continuous-delivery-fallback-tag: ci
-mode: Mainline
+mode: ContinuousDelivery
+strategies:
+    - ConfiguredNextVersion
+    - Mainline
 major-version-bump-message: 'breaking:.*'
 minor-version-bump-message: 'feature:.*'
 patch-version-bump-message: '(fix|chore):.*'
 no-bump-message: 'skip:.*'
 
 branches:
-    master:
+    main:
         increment: Patch
-        regex: (origin/)?main
-        is-mainline: true
+        mode: ContinuousDeployment
+        regex: ^(origin/)?main$
+        is-main-branch: true
     develop:
         increment: Minor
-        tag: beta
+        label: beta
         regex: (origin/)?dev(elop)?(ment)?$

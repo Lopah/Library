@@ -1,12 +1,10 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
-using System.Reflection;
+using Asp.Versioning.ApiExplorer;
 using JetBrains.Annotations;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using OpenApi.Extensions;
 using OpenApi.Filters;
 using OpenApi.Options;
@@ -38,6 +36,13 @@ public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
     /// <param name="options">The options instance to configure.</param>
     public void Configure(SwaggerGenOptions options)
     {
+        ArgumentNullException.ThrowIfNull(options);
+
+        foreach (var description in _provider.ApiVersionDescriptions)
+        {
+            options.SwaggerDoc(description.GroupName, CreateInfoForApiVersion(description));
+        }
+
         if (_openApiOptions.Security.ApiKey is null)
         {
             options.AddOAuthSecurityDefinition(_openApiOptions.Security);
@@ -59,7 +64,7 @@ public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
 
     private void AddServers(SwaggerGenOptions options)
     {
-        if (_openApiOptions.Servers == null && _openApiOptions.Servers?.Any() != true)
+        if (_openApiOptions.Servers == null)
         {
             return;
         }
@@ -72,9 +77,9 @@ public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
 
     private void AddXmlDocs(SwaggerGenOptions options)
     {
-        var xmlPath = Assembly.GetEntryAssembly()?.XmlCommentsFilePath();
+        var xmlPath = AppContext.BaseDirectory;
 
-        if (xmlPath == null || !Directory.Exists(xmlPath))
+        if (!Directory.Exists(xmlPath))
         {
             return;
         }

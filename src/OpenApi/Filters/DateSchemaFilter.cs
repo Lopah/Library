@@ -2,7 +2,7 @@
 using System.Reflection;
 using System.Text.Json.Serialization;
 using JetBrains.Annotations;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Utilities.Converters;
 
@@ -13,7 +13,7 @@ public class DataSchemaFilter : ISchemaFilter
 {
     private const string DateFormat = "date";
 
-    public void Apply(OpenApiSchema schema, SchemaFilterContext context)
+    public void Apply(IOpenApiSchema schema, SchemaFilterContext context)
     {
         if (schema is null)
         {
@@ -27,9 +27,19 @@ public class DataSchemaFilter : ISchemaFilter
 
         var converterAttribute = context.MemberInfo?.GetCustomAttribute<JsonConverterAttribute>();
 
-        if (converterAttribute != null && converterAttribute.ConverterType == typeof(DateTimeConverter))
+        if (schema is not OpenApiSchema openApiSchema || converterAttribute == null)
         {
-            schema.Format = DateFormat;
+            return;
+        }
+
+        if (converterAttribute.ConverterType == typeof(DateConverter) ||
+            converterAttribute.ConverterType == typeof(DateOnlyConverter))
+        {
+            openApiSchema.Format = DateFormat;
+        }
+        else if (converterAttribute.ConverterType == typeof(DateTimeConverter))
+        {
+            openApiSchema.Format = "date-time";
         }
     }
 }

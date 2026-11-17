@@ -1,9 +1,7 @@
 ﻿using System.Linq;
-using System.Reflection;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.PlatformAbstractions;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using OpenApi.Options;
 using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -13,18 +11,11 @@ namespace OpenApi.Extensions;
 [PublicAPI]
 internal static class Extensions
 {
-    internal static string XmlCommentsFilePath(this Assembly assembly)
-    {
-        var basePath = PlatformServices.Default.Application.ApplicationBasePath;
-
-        return basePath;
-    }
-
     internal static void AddOAuthSecurityDefinition(this SwaggerGenOptions options, SecurityOptions securityOptions)
     {
         options.AddSecurityDefinition(
             "oauth2",
-            new()
+            new OpenApiSecurityScheme
             {
                 Type = SecuritySchemeType.OAuth2,
                 Flows = CreateOpenApiOAuthFlows(securityOptions)
@@ -39,7 +30,7 @@ internal static class Extensions
 
         options.AddSecurityDefinition(
             pskScheme,
-            new()
+            new OpenApiSecurityScheme
             {
                 In = ParameterLocation.Header,
                 Type = SecuritySchemeType.ApiKey,
