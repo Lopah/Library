@@ -14,8 +14,8 @@ Retain compatibility unless the task calls for a breaking change. Describe the
 migration and add tests for the affected consumer behavior.
 
 Use the target framework and language settings in the project files. A .NET 11
-upgrade is planned; load the repo-local
-[C# 15 skill](../.agents/skills/csharp-15/SKILL.md) for that upgrade and for code
+upgrade is planned; load the shared
+[C# 15 skill](https://git.lopah.eu/lopah/agent-skills/src/branch/main/plugins/csharp/skills/csharp-15/SKILL.md) for that upgrade and for code
 targeting `net11.0`. Keep older-targeted projects compatible with their current
 compiler. The skill does not authorize changing the target framework or
 enabling preview features outside the requested work.

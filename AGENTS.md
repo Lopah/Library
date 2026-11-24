@@ -5,15 +5,15 @@ Working map for agents and contributors maintaining these shared .NET libraries.
 ## Skills and tracker
 
 - **Forgejo:** before reading issue requirements, reviewing a pull request (PR),
-  or updating tracker records, load the repo-local `forgejo` skill or follow
-  [its workflow](./.agents/skills/forgejo/SKILL.md). The repository is
+  or updating tracker records, load the shared `forgejo` skill (`core:forgejo` in Claude Code) or
+  follow [its workflow](https://git.lopah.eu/lopah/agent-skills/src/branch/main/plugins/core/skills/forgejo/SKILL.md). The repository is
   `lopah/Library` at <https://git.lopah.eu/lopah/Library>, not GitHub.
 - **Documentation:** before writing comments, XML documentation, Markdown,
   commit messages, or PR descriptions, load the repo-local `documentation`
   skill or follow [its standard](./.agents/skills/documentation/SKILL.md).
 - **C# 15:** when planning the .NET 11 upgrade, working in a `net11.0` project,
-  or using C# 15 features, load the repo-local `csharp-15` skill or read
-  [its reference](./.agents/skills/csharp-15/SKILL.md). Check the project's
+  or using C# 15 features, load the shared `csharp-15` skill (`csharp:csharp-15` in Claude Code)
+  or read [its reference](https://git.lopah.eu/lopah/agent-skills/src/branch/main/plugins/csharp/skills/csharp-15/SKILL.md). Check the project's
   current framework and language version before applying its examples.
 
 For issue-driven changes, retrieve the description and discussion before

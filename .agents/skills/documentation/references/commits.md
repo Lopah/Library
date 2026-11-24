@@ -46,7 +46,7 @@ Breaking contracts, dependency changes, or configuration steps.
 Commands run and their results, including anything not verified.
 ```
 
-Retrieve issue requirements and discussions using the repo-local
-[Forgejo workflow](../../forgejo/SKILL.md) before claiming alignment.
+Retrieve issue requirements and discussions using the shared
+[Forgejo workflow](https://git.lopah.eu/lopah/agent-skills/src/branch/main/plugins/core/skills/forgejo/SKILL.md) before claiming alignment.
 If a requested merge uses squashing, apply the same version-aware wording to
 the final squash message.

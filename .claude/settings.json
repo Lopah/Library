@@ -1,0 +1,14 @@
+{
+  "extraKnownMarketplaces": {
+    "lopah": {
+      "source": {
+        "source": "git",
+        "url": "git@git.lopah.eu:lopah/agent-skills.git"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "core@lopah": true,
+    "csharp@lopah": true
+  }
+}
