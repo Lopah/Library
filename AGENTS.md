@@ -9,8 +9,11 @@ Working map for agents and contributors maintaining these shared .NET libraries.
   follow [its workflow](https://git.lopah.eu/lopah/agent-skills/src/branch/main/plugins/core/skills/forgejo/SKILL.md). The repository is
   `lopah/Library` at <https://git.lopah.eu/lopah/Library>, not GitHub.
 - **Documentation:** before writing comments, XML documentation, Markdown,
-  commit messages, or PR descriptions, load the repo-local `documentation`
-  skill or follow [its standard](./.agents/skills/documentation/SKILL.md).
+  commit messages, or PR descriptions, load the shared `documentation`
+  skill (`core:documentation` in Claude Code) or follow
+  [its standard](https://git.lopah.eu/lopah/agent-skills/src/branch/main/plugins/core/skills/documentation/SKILL.md),
+  with this repository's
+  [documentation profile](./docs/agents/documentation.md).
 - **C# 15:** when planning the .NET 11 upgrade, working in a `net11.0` project,
   or using C# 15 features, load the shared `csharp-15` skill (`csharp:csharp-15` in Claude Code)
   or read [its reference](https://git.lopah.eu/lopah/agent-skills/src/branch/main/plugins/csharp/skills/csharp-15/SKILL.md). Check the project's
@@ -66,8 +69,9 @@ and plain .NET CLI commands. Inspect the current checkout: use
 and `build/`. Follow the active workflow for CI checks and publishing conditions
 rather than assuming the migration has already landed.
 
-Read `GitVersion.yml` before choosing version-bump commit wording; its custom
-patterns differ from the portal's Conventional Commits standard. Explain
+Commit subjects decide package versions through `GitVersion.yml`; the
+[documentation profile](./docs/agents/documentation.md) maps each
+Conventional Commit type to its version bump. Explain
 consumer migration steps in the README and release-facing changes in
 `CHANGELOG.md` when applicable.
 

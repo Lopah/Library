@@ -7,9 +7,12 @@ mode: ContinuousDelivery
 strategies:
     - ConfiguredNextVersion
     - Mainline
-major-version-bump-message: 'breaking:.*'
-minor-version-bump-message: 'feature:.*'
-patch-version-bump-message: '(fix|chore):.*'
+# Conventional Commits. The legacy `breaking:` and `feature:` prefixes stay
+# matched because no release is tagged, so GitVersion recomputes the version
+# from all history; dropping them would lower the computed version.
+major-version-bump-message: '(?m)^(breaking:|[a-z]+(\([^)]*\))?!:|BREAKING[ -]CHANGE:)'
+minor-version-bump-message: '^(feat|feature)(\([^)]*\))?:'
+patch-version-bump-message: '^(fix|perf)(\([^)]*\))?:'
 no-bump-message: 'skip:.*'
 
 branches:
